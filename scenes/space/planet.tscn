@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://c3gtgl2vq76xu"]
+
+[ext_resource type="Script" path="res://scripts/space/planet.gd" id="1_p5sbq"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pyo63"]
+
+[node name="Planet" type="Node2D"]
+script = ExtResource("1_p5sbq")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.1, 0.1)
+
+[node name="InteractionZone" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionZone"]
+scale = Vector2(2, 2)
+shape = SubResource("CircleShape2D_pyo63")
+
+[connection signal="body_entered" from="InteractionZone" to="." method="_on_interaction_zone_body_entered"]
+[connection signal="body_exited" from="InteractionZone" to="." method="_on_interaction_zone_body_exited"]

@@ -1,0 +1,25 @@
+[gd_resource type="SpriteFrames" load_steps=4 format=3 uid="uid://c16h02hhf5v6b"]
+
+[ext_resource type="Texture2D" uid="uid://cdc6lyjhmt1al" path="res://assets/textures/pig_spritesheet.png" id="1_ytysc"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5058i"]
+atlas = ExtResource("1_ytysc")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o33df"]
+atlas = ExtResource("1_ytysc")
+region = Rect2(16, 0, 16, 16)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5058i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o33df")
+}],
+"loop": true,
+"name": &"default",
+"speed": 2.0
+}]

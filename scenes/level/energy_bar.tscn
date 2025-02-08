@@ -1,0 +1,51 @@
+[gd_scene load_steps=6 format=3 uid="uid://b67eybfcojqht"]
+
+[ext_resource type="Texture2D" uid="uid://n81wecge8n14" path="res://assets/textures/progress_bar_over_half.png" id="1_0b83d"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pbpkp"]
+atlas = ExtResource("1_0b83d")
+region = Rect2(0, 0, 240, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kt5ec"]
+atlas = ExtResource("1_0b83d")
+region = Rect2(0, 48, 240, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4og76"]
+atlas = ExtResource("1_0b83d")
+region = Rect2(0, 96, 240, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lyrfi"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pbpkp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kt5ec")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4og76")
+}],
+"loop": true,
+"name": &"default",
+"speed": 2.0
+}]
+
+[node name="EnergyBar" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+self_modulate = Color(0.878431, 0, 0.184314, 1)
+layout_mode = 0
+offset_left = -106.0
+offset_top = -20.0
+offset_right = 102.0
+offset_bottom = 19.0
+value = 100.0
+show_percentage = false
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_lyrfi")
+autoplay = "default"
+frame_progress = 0.69593

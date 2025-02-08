@@ -1,0 +1,45 @@
+[gd_resource type="SpriteFrames" load_steps=6 format=3 uid="uid://q5m7qdlqwe40"]
+
+[ext_resource type="Texture2D" uid="uid://q3h7ljhrjg2y" path="res://assets/textures/flying_pig_spritesheet.png" id="1_5s1sg"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4jrst"]
+atlas = ExtResource("1_5s1sg")
+region = Rect2(174, 0, 58, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s14b3"]
+atlas = ExtResource("1_5s1sg")
+region = Rect2(116, 0, 58, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8u4xt"]
+atlas = ExtResource("1_5s1sg")
+region = Rect2(58, 0, 58, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uk4cc"]
+atlas = ExtResource("1_5s1sg")
+region = Rect2(0, 0, 58, 32)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4jrst")
+}, {
+"duration": 0.4,
+"texture": SubResource("AtlasTexture_s14b3")
+}, {
+"duration": 0.4,
+"texture": SubResource("AtlasTexture_8u4xt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uk4cc")
+}, {
+"duration": 0.4,
+"texture": SubResource("AtlasTexture_8u4xt")
+}, {
+"duration": 0.4,
+"texture": SubResource("AtlasTexture_s14b3")
+}],
+"loop": true,
+"name": &"default",
+"speed": 3.0
+}]

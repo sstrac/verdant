@@ -1,0 +1,44 @@
+[gd_scene load_steps=7 format=3 uid="uid://dlmt6mg8kcgt4"]
+
+[ext_resource type="Texture2D" uid="uid://qyv1kndydpck" path="res://assets/textures/stars/star.png" id="2_1adnl"]
+[ext_resource type="Texture2D" uid="uid://y2xvaq1yentl" path="res://assets/textures/stars/nebula.png" id="2_a7124"]
+[ext_resource type="PackedScene" uid="uid://cc2mbcsrvkqd7" path="res://scenes/space/spaceship_grid.tscn" id="3_2d27n"]
+[ext_resource type="PackedScene" uid="uid://c3gtgl2vq76xu" path="res://scenes/space/planet.tscn" id="4_2xbqh"]
+[ext_resource type="PackedScene" uid="uid://ecdlgh485rbl" path="res://scenes/level/level.tscn" id="5_atqsr"]
+[ext_resource type="Texture2D" uid="uid://bg2gdj1iiwriy" path="res://assets/textures/planets/orange-planet.webp" id="5_rb1iq"]
+
+[node name="Space" type="Node2D"]
+
+[node name="black_bg" type="Parallax2D" parent="."]
+repeat_size = Vector2(1152, 648)
+
+[node name="ColorRect" type="ColorRect" parent="black_bg"]
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0, 0, 0, 1)
+
+[node name="nebula_parallax" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.9, 0.9)
+repeat_size = Vector2(1152, 648)
+
+[node name="nebula" type="Sprite2D" parent="nebula_parallax"]
+texture_filter = 1
+texture = ExtResource("2_a7124")
+centered = false
+
+[node name="star_parallax" type="Parallax2D" parent="."]
+scroll_scale = Vector2(1.1, 1.1)
+repeat_size = Vector2(1152, 648)
+
+[node name="star" type="Sprite2D" parent="star_parallax"]
+texture_filter = 1
+texture = ExtResource("2_1adnl")
+centered = false
+
+[node name="Planet" parent="." instance=ExtResource("4_2xbqh")]
+position = Vector2(592, -324)
+scale = Vector2(12, 12)
+sprite = ExtResource("5_rb1iq")
+scene = ExtResource("5_atqsr")
+
+[node name="SpaceshipGrid" parent="." instance=ExtResource("3_2d27n")]
