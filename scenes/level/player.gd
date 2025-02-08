@@ -1,8 +1,8 @@
 extends CharacterBody2D
 
 
-const SPEED = 100
-
+const ORTHOGONAL_SPEED = 100
+const DIAGONAL_SPEED = 75
 
 @onready var animation_tree = get_node("AnimationTree")
 
@@ -11,10 +11,14 @@ var last_velocity: Vector2i = Vector2.ZERO
 
 func _physics_process(delta: float) -> void:
 	var direction = Input.get_vector("left", "right", "up", "down")
-	velocity = direction.sign() * SPEED
+	var speed = ORTHOGONAL_SPEED
 	
-	var norm_velocity = velocity.normalized()
-	last_velocity = norm_velocity if velocity else last_velocity
+	if velocity.x != 0 and velocity.y != 0 : 
+		speed = DIAGONAL_SPEED 
+	velocity = direction.sign() * speed 
+	
+	last_velocity = velocity if velocity else last_velocity
+
 	
 	animation_tree.set('parameters/walk/blend_position', last_velocity)
 	animation_tree.set('parameters/still/blend_position', last_velocity)
