@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scripts/level/level.gd" id="1_4jyfo"]
 [ext_resource type="TileSet" uid="uid://nw37lq2stfqc" path="res://assets/textures/level_tileset.tres" id="2_qm5pl"]
 [ext_resource type="PackedScene" uid="uid://cmrnqmwon6ybf" path="res://player.tscn" id="3_kqous"]
-[ext_resource type="PackedScene" uid="uid://dleajr8g6u06r" path="res://scenes/level/animal.tscn" id="4_m3s2v"]
+[ext_resource type="PackedScene" uid="uid://dleajr8g6u06r" path="res://scenes/level/fauna_flora/animal.tscn" id="4_m3s2v"]
 
 [node name="Level" type="Node2D"]
 script = ExtResource("1_4jyfo")

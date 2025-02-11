@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=4 uid="uid://ecdlgh485rbl"]
+[gd_scene load_steps=10 format=4 uid="uid://ecdlgh485rbl"]
 
 [ext_resource type="Script" path="res://scripts/level/level.gd" id="1_n2urj"]
 [ext_resource type="TileSet" uid="uid://nw37lq2stfqc" path="res://assets/textures/level_tileset.tres" id="2_rjj6t"]
 [ext_resource type="PackedScene" uid="uid://cmrnqmwon6ybf" path="res://player.tscn" id="3_cru1r"]
-[ext_resource type="PackedScene" uid="uid://dleajr8g6u06r" path="res://scenes/level/animal.tscn" id="3_g8raj"]
+[ext_resource type="PackedScene" uid="uid://dleajr8g6u06r" path="res://scenes/level/fauna_flora/animal.tscn" id="3_g8raj"]
 [ext_resource type="Shader" path="res://assets/shaders/fog.gdshader" id="5_r83v5"]
+[ext_resource type="PackedScene" uid="uid://bc0f5b42jpt6b" path="res://scenes/level/fauna_flora/tree.tscn" id="6_oaafg"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_4xikw"]
 frequency = 0.0075
@@ -30,10 +31,6 @@ tile_map_data = PackedByteArray("AAALAAMAAgAAAAEAAAAMAAMAAgAAAAEAAAANAAMAAgAAAAE
 tile_set = ExtResource("2_rjj6t")
 
 [node name="SurfaceLayer" type="TileMapLayer" parent="."]
-tile_set = ExtResource("2_rjj6t")
-
-[node name="ObjectLayer" type="TileMapLayer" parent="."]
-tile_map_data = PackedByteArray("AAAMABcAAgACAAQAAABBAA4AAgACAAQAAABDABIAAgACAAQAAABAABgAAgACAAQAAAA6ABgAAgACAAQAAAA4ABIAAgACAAQAAAA3ABcAAgACAAQAAAA2AA8AAgACAAQAAAA4AA0AAgACAAQAAAA8AAwAAgACAAQAAAA8ABEAAgACAAQAAAAKABEAAgACAAQAAAASABUAAgACAAQAAAAPABEAAgACAAQAAAAcABAAAgACAAQAAAAgABcAAgACAAQAAAAlABkAAgACAAQAAAAgABkAAgACAAQAAAAqABkAAgACAAQAAAAsABIAAgACAAQAAAAnABEAAgACAAQAAAAkAA8AAgACAAQAAAAkABIAAgACAAQAAAAhABAAAgACAAQAAAAzABEAAgACAAQAAAAyABkAAgACAAQAAAAvABoAAgACAAQAAAAwAA8AAgACAAQAAAAqAA8AAgACAAQAAAAHABEAAgADAAcAAAADABIAAgACAAcAAAAEABUAAgAEAAYAAAAiAAIAAgAHAAEAAAAaAAQAAgAHAAEAAAAkAAYAAgAHAAEAAAAeAAcAAgAHAAMAAAA=")
 tile_set = ExtResource("2_rjj6t")
 
 [node name="FoliageLayer" type="TileMapLayer" parent="."]
@@ -70,3 +67,6 @@ offset_top = 4.0
 offset_right = 1139.0
 offset_bottom = 652.0
 color = Color(0.82606, 0.82606, 0.82606, 1)
+
+[node name="Tree" parent="." instance=ExtResource("6_oaafg")]
+position = Vector2(137, 340)

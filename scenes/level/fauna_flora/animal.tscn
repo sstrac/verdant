@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://dleajr8g6u06r"]
 
 [ext_resource type="SpriteFrames" uid="uid://c16h02hhf5v6b" path="res://assets/spriteframes/pig.tres" id="1_ydo0i"]
-[ext_resource type="Script" path="res://scenes/level/animal.gd" id="2_1u7pc"]
+[ext_resource type="Script" path="res://scenes/level/fauna_flora/animal.gd" id="2_1u7pc"]
 
 [sub_resource type="Gradient" id="Gradient_3i3r4"]
 offsets = PackedFloat32Array(0.754098, 1)

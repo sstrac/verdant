@@ -6,7 +6,8 @@ const DIAGONAL_SPEED = 75
 
 @onready var animation_tree = get_node("AnimationTree")
 
-var last_velocity: Vector2i = Vector2.ZERO
+var last_velocity = Vector2.ZERO
+var closest_revivable: Revivable
 
 
 func _physics_process(delta: float) -> void:
@@ -27,3 +28,15 @@ func _physics_process(delta: float) -> void:
 	
 
 	move_and_slide()
+
+
+func _on_area_2d_area_entered(area: Area2D) -> void:
+	var direction_to_area = global_position.direction_to(area.global_position)
+	
+	# We are more LEFT/RIGHT than UP/DOWN
+	var facing_area = (abs(direction_to_area.x) >= abs(direction_to_area.y) and direction_to_area.sign().x == velocity.sign().x) \
+	# We are more UP/DOWN than LEFT/RIGHT
+		or abs(direction_to_area.x) < abs(direction_to_area.y) and direction_to_area.sign().y == velocity.sign().y
+
+	if facing_area:
+		closest_revivable = area.get_parent()

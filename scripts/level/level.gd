@@ -1,7 +1,7 @@
 extends Node2D
 
 const LERP_SPEED = 10
-
+const VECTOR_16 = Vector2i(16, 16)
 
 
 @onready var player = get_node("Player")
@@ -10,10 +10,8 @@ const LERP_SPEED = 10
 
 @onready var ground_layer: TileMapLayer = get_node("GroundLayer")
 @onready var surface_layer: TileMapLayer = get_node("SurfaceLayer")
-@onready var object_layer: TileMapLayer = get_node("ObjectLayer")
 @onready var foliage_layer: TileMapLayer = get_node("FoliageLayer")
 
-var layers_in_priority = []
 
 func _physics_process(delta: float) -> void:
 	camera.global_position = lerp(camera.global_position, player.global_position, delta * LERP_SPEED)
@@ -27,23 +25,29 @@ func _process(delta):
 	else:
 		player.z_index = player.global_position.y
 
+
+
+func _perform_action():
+	if not player.closest_revivable.revived:
+		player.closest_revivable.revive()
 	
+
+func _revive_tile():
+	var direction: Vector2i = player.last_velocity.sign()
+	var map_cell = ground_layer.local_to_map(player.position) + direction
+	var atlas_cell = ground_layer.get_cell_atlas_coords(map_cell)
+	var cell_data = ground_layer.get_cell_tile_data(map_cell)
+	var dead
+	if cell_data:
+		dead = cell_data.get_custom_data('dead')
+	
+	if atlas_cell != -Vector2i.ONE:# and dead:
+		ground_layer.set_cell(map_cell, TileCoords.LUMINO_SOURCE, atlas_cell + Vector2i.RIGHT)
+
+
 func _input(event: InputEvent):
 	if event.is_action_pressed("execute"):
-		
-		
-		var affected_cell: Vector2i = ground_layer.local_to_map(player.position) + player.last_velocity
-		
-		var affected_cell_atlas: Vector2i = ground_layer.get_cell_atlas_coords(affected_cell)
-		#print(affected_cell_atlas)
-		var alt_tile = ground_layer.get_cell_alternative_tile(affected_cell)
-		ground_layer.set_cell(affected_cell, TileCoords.LUMINO_SOURCE, affected_cell_atlas, 1)
-		print(affected_cell_atlas)
-		#var revived_cell_atlas = affected_cell_atlas + Vector2i.RIGHT
-		#
-		#if not ground_layer.get_cell_tile_data(affected_cell).get_custom_data("revived"):
-			#ground_layer.set_cell(affected_cell, TileCoords.LUMINO_SOURCE, revived_cell_atlas)
-		#
+		_perform_action()
 		_make_pigs_fly()
 
 
