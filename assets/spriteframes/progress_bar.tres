@@ -1,0 +1,32 @@
+[gd_resource type="SpriteFrames" load_steps=5 format=3 uid="uid://dj38rkqbxu15l"]
+
+[ext_resource type="Texture2D" uid="uid://n81wecge8n14" path="res://assets/textures/progress_bar_over_half.png" id="1_r52tv"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xa220"]
+atlas = ExtResource("1_r52tv")
+region = Rect2(0, 0, 240, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dseen"]
+atlas = ExtResource("1_r52tv")
+region = Rect2(0, 48, 240, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o8ti3"]
+atlas = ExtResource("1_r52tv")
+region = Rect2(0, 96, 240, 48)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xa220")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dseen")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o8ti3")
+}],
+"loop": true,
+"name": &"default",
+"speed": 3.0
+}]

@@ -9,7 +9,6 @@ const VECTOR_16 = Vector2i(16, 16)
 @onready var animals = get_node("Animals").get_children()
 
 @onready var ground_layer: TileMapLayer = get_node("GroundLayer")
-@onready var surface_layer: TileMapLayer = get_node("SurfaceLayer")
 @onready var foliage_layer: TileMapLayer = get_node("FoliageLayer")
 
 
@@ -26,7 +25,6 @@ func _process(delta):
 		player.z_index = player.global_position.y
 
 
-
 func _perform_action():
 	if not player.closest_revivable.revived:
 		player.closest_revivable.revive()
@@ -41,7 +39,7 @@ func _revive_tile():
 	if cell_data:
 		dead = cell_data.get_custom_data('dead')
 	
-	if atlas_cell != -Vector2i.ONE:# and dead:
+	if atlas_cell != -Vector2i.ONE:
 		ground_layer.set_cell(map_cell, TileCoords.LUMINO_SOURCE, atlas_cell + Vector2i.RIGHT)
 
 
