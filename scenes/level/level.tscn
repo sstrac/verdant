@@ -66,9 +66,44 @@ offset_right = 1191.0
 offset_bottom = 680.0
 color = Color(0.82606, 0.82606, 0.82606, 1)
 
-[node name="Tree" parent="." instance=ExtResource("6_oaafg")]
-position = Vector2(137, 340)
-
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="UI" parent="CanvasLayer" instance=ExtResource("7_n7j3b")]
+
+[node name="Trees" type="Node2D" parent="."]
+
+[node name="Tree" parent="Trees" instance=ExtResource("6_oaafg")]
+position = Vector2(21, 395)
+
+[node name="Tree2" parent="Trees" instance=ExtResource("6_oaafg")]
+position = Vector2(196, 282)
+
+[node name="Tree3" parent="Trees" instance=ExtResource("6_oaafg")]
+position = Vector2(393, 347)
+
+[node name="Tree4" parent="Trees" instance=ExtResource("6_oaafg")]
+position = Vector2(357, 374)
+
+[node name="Tree5" parent="Trees" instance=ExtResource("6_oaafg")]
+position = Vector2(421, 390)
+
+[node name="Tree6" parent="Trees" instance=ExtResource("6_oaafg")]
+position = Vector2(518, 283)
+
+[node name="Tree7" parent="Trees" instance=ExtResource("6_oaafg")]
+position = Vector2(557, 254)
+
+[node name="Tree8" parent="Trees" instance=ExtResource("6_oaafg")]
+position = Vector2(621, 267)
+
+[node name="Tree9" parent="Trees" instance=ExtResource("6_oaafg")]
+position = Vector2(585, 298)
+
+[node name="Tree10" parent="Trees" instance=ExtResource("6_oaafg")]
+position = Vector2(1054, 270)
+
+[node name="Tree11" parent="Trees" instance=ExtResource("6_oaafg")]
+position = Vector2(916, 367)
+
+[node name="Tree12" parent="Trees" instance=ExtResource("6_oaafg")]
+position = Vector2(1097, 383)

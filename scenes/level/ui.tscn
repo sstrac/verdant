@@ -36,7 +36,7 @@ show_percentage = false
 position = Vector2(-15, -11)
 sprite_frames = ExtResource("1_cko8l")
 autoplay = "default"
-frame_progress = 0.177076
+frame_progress = 0.464545
 centered = false
 
 [node name="Control" type="HBoxContainer" parent="Control"]
