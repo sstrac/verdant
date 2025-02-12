@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://bvrrafoamyu4e"]
+[gd_scene load_steps=4 format=3 uid="uid://bvrrafoamyu4e"]
 
 [ext_resource type="SpriteFrames" uid="uid://dj38rkqbxu15l" path="res://assets/spriteframes/progress_bar.tres" id="1_cko8l"]
+[ext_resource type="Script" path="res://level/ui.gd" id="1_m0i3k"]
 [ext_resource type="Texture2D" uid="uid://brnb0d7sr2ynn" path="res://assets/textures/watering_can.png" id="2_e7vp6"]
 
 [node name="UI" type="Control"]
@@ -10,6 +11,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_m0i3k")
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 1
@@ -36,7 +38,7 @@ show_percentage = false
 position = Vector2(-15, -11)
 sprite_frames = ExtResource("1_cko8l")
 autoplay = "default"
-frame_progress = 0.464545
+frame_progress = 0.343227
 centered = false
 
 [node name="Control" type="HBoxContainer" parent="Control"]

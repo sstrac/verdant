@@ -10,8 +10,17 @@ const VECTOR_16 = Vector2i(16, 16)
 
 @onready var ground_layer: TileMapLayer = get_node("GroundLayer")
 @onready var foliage_layer: TileMapLayer = get_node("FoliageLayer")
+@onready var ui = get_node("CanvasLayer/UI")
 
 
+func _ready():
+	player.ability_changed.connect(_change_ability)
+	
+
+func _change_ability(ability):
+	ui.change_ability(ability)
+	
+	
 func _physics_process(delta: float) -> void:
 	camera.global_position = lerp(camera.global_position, player.global_position, delta * LERP_SPEED)
 
@@ -25,10 +34,6 @@ func _process(delta):
 		player.z_index = player.global_position.y
 
 
-func _perform_action():
-	if not player.closest_revivable.revived:
-		player.closest_revivable.revive()
-	
 
 func _revive_tile():
 	var direction: Vector2i = player.last_velocity.sign()
@@ -45,8 +50,10 @@ func _revive_tile():
 
 func _input(event: InputEvent):
 	if event.is_action_pressed("execute"):
-		_perform_action()
+		player.current_ability.perform(player)
 		_make_pigs_fly()
+	elif event.is_action_pressed("tab"):
+		player.switch_abilities()
 
 
 func _make_pigs_fly():

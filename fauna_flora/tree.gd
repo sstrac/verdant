@@ -9,6 +9,7 @@ const TREE_3 = preload("res://assets/textures/fauna_flora/tree_3.png")
 
 @onready var rect = get_node("TextureRect")
 @onready var timer = get_node("Timer")
+@onready var particles = get_node("CPUParticles2D")
 
 
 func _ready():
@@ -26,7 +27,7 @@ func grow():
 	match rect.texture:
 		TREE_0: rect.texture = TREE_1
 		TREE_1: rect.texture = TREE_2
-		TREE_2: rect.texture = TREE_3
+		TREE_2: rect.texture = TREE_3; particles.emitting = true
 	
 	if rect.texture == TREE_3:
 		timer.stop()

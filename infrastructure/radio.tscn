@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://dwp7ujt7w2rq5"]
+
+[ext_resource type="Texture2D" uid="uid://c8lk65xvgb0i8" path="res://assets/textures/infrastructure/radio.png" id="1_1ixh0"]
+
+[node name="Radio" type="Node2D"]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_right = 75.0
+offset_bottom = 25.0
+texture = ExtResource("1_1ixh0")
+stretch_mode = 2
