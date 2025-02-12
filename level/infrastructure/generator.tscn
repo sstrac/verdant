@@ -98,6 +98,12 @@ _data = {
 "break": SubResource("Animation_no1nq")
 }
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_socxu"]
+size = Vector2(34, 12)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1c55j"]
+radius = 20.0
+
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_2fesx"]
 noise_type = 2
 seed = 1
@@ -132,12 +138,6 @@ shader_parameter/density = 0.5
 shader_parameter/speed = Vector2(0.01, 0.5)
 shader_parameter/noise_texture = SubResource("NoiseTexture2D_6b4if")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_socxu"]
-size = Vector2(34, 12)
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_1c55j"]
-radius = 20.0
-
 [node name="Generator" type="StaticBody2D"]
 script = ExtResource("1_ontyq")
 destroyable = true
@@ -151,21 +151,6 @@ libraries = {
 }
 autoplay = "bounce"
 
-[node name="Smoke" type="ColorRect" parent="."]
-material = SubResource("ShaderMaterial_lsld7")
-offset_left = -9.0
-offset_top = -100.0
-offset_right = 20.0
-offset_bottom = -12.0
-
-[node name="Smoke2" type="ColorRect" parent="."]
-material = SubResource("ShaderMaterial_5sh2u")
-offset_left = -6.0
-offset_top = -83.0
-offset_right = 21.0
-offset_bottom = -14.0
-color = Color(0.82606, 0.82606, 0.82606, 1)
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 6)
 shape = SubResource("RectangleShape2D_socxu")
@@ -175,3 +160,24 @@ shape = SubResource("RectangleShape2D_socxu")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(0, 4)
 shape = SubResource("CircleShape2D_1c55j")
+
+[node name="Smoke" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ColorRect" type="ColorRect" parent="Smoke"]
+material = SubResource("ShaderMaterial_lsld7")
+offset_left = -9.0
+offset_top = -100.0
+offset_right = 20.0
+offset_bottom = -12.0
+
+[node name="ColorRect2" type="ColorRect" parent="Smoke"]
+material = SubResource("ShaderMaterial_5sh2u")
+offset_left = -6.0
+offset_top = -83.0
+offset_right = 21.0
+offset_bottom = -14.0
+color = Color(0.82606, 0.82606, 0.82606, 1)
