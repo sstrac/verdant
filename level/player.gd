@@ -7,16 +7,13 @@ const DIAGONAL_SPEED = 75
 @onready var animation_tree = get_node("AnimationTree")
 
 var last_velocity = Vector2.ZERO
-var closest_revivable: Revivable
 var available_abilities = []
 var current_ability: Ability
-
-
-signal ability_changed(new_action)
+var closest_interactable: Interactable
 
 
 func _ready():
-	available_abilities.append(Watering.new())
+	available_abilities.append(Hand.new())
 	current_ability = available_abilities[0]
 
 
@@ -58,9 +55,9 @@ func _on_area_2d_area_entered(area: Area2D) -> void:
 		or abs(direction_to_area.x) < abs(direction_to_area.y) and direction_to_area.sign().y == velocity.sign().y
 
 	if facing_area:
-		closest_revivable = area.get_parent()
+		closest_interactable = area.get_parent()
 
 
 func _on_area_2d_area_exited(area: Area2D) -> void:
-	if closest_revivable == area.get_parent():
-		closest_revivable = null
+	if closest_interactable == area.get_parent():
+		closest_interactable = null

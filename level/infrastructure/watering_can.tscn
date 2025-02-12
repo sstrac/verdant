@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://cjkbu32ldwjyk"]
+
+[ext_resource type="Script" path="res://level/infrastructure/watering_can.gd" id="1_4ojnq"]
+[ext_resource type="Texture2D" uid="uid://bvpcodas17pbb" path="res://assets/textures/infrastructure/watering_can_mini.png" id="1_6qfcs"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cav40"]
+size = Vector2(14.5, 12)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_32giu"]
+radius = 12.0
+
+[node name="WateringCan" type="StaticBody2D"]
+script = ExtResource("1_4ojnq")
+obtainable = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_6qfcs")
+centered = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(8.75, 9)
+shape = SubResource("RectangleShape2D_cav40")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(9, 10)
+shape = SubResource("CircleShape2D_32giu")
