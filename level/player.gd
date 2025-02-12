@@ -48,11 +48,13 @@ func _physics_process(delta: float) -> void:
 
 func _on_area_2d_area_entered(area: Area2D) -> void:
 	var direction_to_area = global_position.direction_to(area.global_position)
-	
-	# We are more LEFT/RIGHT than UP/DOWN
-	var facing_area = (abs(direction_to_area.x) >= abs(direction_to_area.y) and direction_to_area.sign().x == velocity.sign().x) \
-	# We are more UP/DOWN than LEFT/RIGHT
-		or abs(direction_to_area.x) < abs(direction_to_area.y) and direction_to_area.sign().y == velocity.sign().y
+
+	var coming_from_x_axis = abs(direction_to_area.x) >= abs(direction_to_area.y)
+	var facing_x = direction_to_area.sign().x == velocity.sign().x
+	var coming_from_y_axis = abs(direction_to_area.x) < abs(direction_to_area.y)
+	var facing_y = direction_to_area.sign().y == velocity.sign().y
+
+	var facing_area = (coming_from_x_axis and facing_x) or (coming_from_y_axis and facing_y)
 
 	if facing_area:
 		closest_interactable = area.get_parent()

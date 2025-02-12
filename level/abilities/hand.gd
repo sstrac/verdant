@@ -9,6 +9,7 @@ func _init():
 	
 func perform(player):
 	if player.closest_interactable:
-		if player.closest_interactable.obtainable:
+		# Remove destroyable will be a different ability
+		if player.closest_interactable.obtainable or player.closest_interactable.destroyable:
 			player.closest_interactable.interact()
 			player.available_abilities.append(Watering.new())
