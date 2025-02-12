@@ -6,4 +6,5 @@ class_name Revivable
 var revived = false
 
 
+
 func revive(): pass
