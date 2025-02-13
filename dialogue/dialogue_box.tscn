@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://eqyhkfrap4yc"]
+[gd_scene load_steps=5 format=3 uid="uid://eqyhkfrap4yc"]
 
 [ext_resource type="Script" path="res://dialogue/dialogue_box.gd" id="1_ndget"]
-[ext_resource type="Texture2D" uid="uid://c3qwehfta16eg" path="res://icon.svg" id="2_7qeij"]
+[ext_resource type="Texture2D" uid="uid://dfy7t0y7xpovt" path="res://assets/textures/dialogue_character.png" id="2_jah1w"]
+[ext_resource type="Texture2D" uid="uid://ckf1l8xq0kugc" path="res://assets/textures/dialogue_companion.png" id="3_dv17h"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_timoc"]
 content_margin_left = 10.0
@@ -14,12 +15,12 @@ bg_color = Color(0.00674702, 0.110076, 0.188092, 1)
 script = ExtResource("1_ndget")
 
 [node name="LeftSprite" type="Sprite2D" parent="."]
-position = Vector2(190, 222)
-texture = ExtResource("2_7qeij")
+position = Vector2(167, 363)
+texture = ExtResource("2_jah1w")
 
 [node name="RightSprite" type="Sprite2D" parent="."]
-position = Vector2(963, 221)
-texture = ExtResource("2_7qeij")
+position = Vector2(984, 394)
+texture = ExtResource("3_dv17h")
 flip_h = true
 
 [node name="DialogueBox" type="PanelContainer" parent="."]

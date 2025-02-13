@@ -8,15 +8,24 @@ var finished: bool
 @onready var right_sprite = get_node("RightSprite")
 @onready var text = get_node("DialogueBox/RichTextLabel")
 
-var scene
+var scene:
+	set(s):
+		scene = s
+		manuscript = s.get('script')
+		characters = s.get('characters')
+var manuscript
+var characters
+
+signal complete(scene)
 
 
 func _ready():
 	_show_dialogue()
-	
+
+
 func _show_dialogue():
-	var characters = scene.get('characters')
-	var split_line = scene.get('script')[tracker].split(":")
+	var characters = characters
+	var split_line = manuscript[tracker].split(":")
 	if split_line[0].to_lower() == "right":
 		right_sprite.texture = characters["right"]
 		right_sprite.show()
@@ -35,8 +44,9 @@ func _input(event: InputEvent):
 			tracker += 1
 			_show_dialogue()
 			
-			if tracker + 1 == scene.size():
+			if tracker + 1 == manuscript.size():
 				finished = true
 		else:
+			complete.emit(scene)
 			queue_free()
 		

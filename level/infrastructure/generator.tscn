@@ -169,15 +169,18 @@ offset_bottom = 40.0
 
 [node name="ColorRect" type="ColorRect" parent="Smoke"]
 material = SubResource("ShaderMaterial_lsld7")
+layout_mode = 0
 offset_left = -9.0
-offset_top = -100.0
+offset_top = -101.0
 offset_right = 20.0
-offset_bottom = -12.0
+offset_bottom = -13.0
+color = Color(0.823529, 0.27451, 1, 1)
 
 [node name="ColorRect2" type="ColorRect" parent="Smoke"]
 material = SubResource("ShaderMaterial_5sh2u")
+layout_mode = 0
 offset_left = -6.0
-offset_top = -83.0
+offset_top = -82.0
 offset_right = 21.0
-offset_bottom = -14.0
-color = Color(0.82606, 0.82606, 0.82606, 1)
+offset_bottom = -13.0
+color = Color(0.301961, 0.431373, 0.827451, 1)

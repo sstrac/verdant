@@ -6,7 +6,7 @@ const DIAGONAL_SPEED = 75
 
 @onready var animation_tree = get_node("AnimationTree")
 
-var last_velocity = Vector2.ZERO
+var last_velocity = Vector2.DOWN
 var available_abilities = []
 var current_ability: Ability
 var closest_interactable: Interactable
@@ -35,15 +35,26 @@ func _physics_process(delta: float) -> void:
 	velocity = direction.sign() * speed 
 	
 	last_velocity = velocity if velocity else last_velocity
+	_animate()
 
+	move_and_slide()
 	
+	
+func _animate():
 	animation_tree.set('parameters/walk/blend_position', last_velocity)
 	animation_tree.set('parameters/still/blend_position', last_velocity)
 	animation_tree.set('parameters/conditions/walk', velocity)
 	animation_tree.set('parameters/conditions/still', !velocity)
-	
 
-	move_and_slide()
+
+func stop_physics_input():
+	set_physics_process(false)
+	velocity = Vector2i.ZERO
+	_animate()
+
+
+func start_physics_input():
+	set_physics_process(true)
 
 
 func _on_area_2d_area_entered(area: Area2D) -> void:

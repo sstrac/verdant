@@ -6,4 +6,3 @@ extends Control
 
 func change_ability(ability: Ability):
 	current_ability.texture = ability.texture
-	#Todo change right/left label

@@ -11,6 +11,7 @@ const DIALOGUE_BOX = preload("res://dialogue/dialogue_box.tscn")
 
 @onready var ground_layer: TileMapLayer = get_node("GroundLayer")
 @onready var surface_layer: TileMapLayer = get_node("SurfaceLayer")
+@onready var ui_canvas_layer = get_node("CanvasLayer")
 @onready var ui = get_node("CanvasLayer/UI")
 
 var next_scene = Scenes.SCENE_1
@@ -61,8 +62,18 @@ func _make_pigs_fly():
 func _play_cutscene(scene):
 	var dialogue_box = DIALOGUE_BOX.instantiate()
 	dialogue_box.scene = scene
-	add_child(dialogue_box)
+	ui_canvas_layer.add_child(dialogue_box)
+	dialogue_box.complete.connect(_on_dialogue_finished)
+	player.stop_physics_input()
+
+
+func _on_dialogue_finished(scene):
+	player.start_physics_input()
+	
+	match scene:
+		Scenes.SCENE_1: next_scene = Scenes.SCENE_2
 
 
 func _on_scene_1_area_area_entered(area: Area2D) -> void:
-	_play_cutscene(Scenes.SCENE_1)
+	if next_scene == Scenes.SCENE_1:
+		_play_cutscene(Scenes.SCENE_1)
