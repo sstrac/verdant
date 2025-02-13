@@ -59,9 +59,9 @@ func _make_pigs_fly():
 		animal.evolve()
 
 
-func _play_cutscene(scene):
+func _play_cutscene():
 	var dialogue_box = DIALOGUE_BOX.instantiate()
-	dialogue_box.scene = scene
+	dialogue_box.scene = next_scene
 	ui_canvas_layer.add_child(dialogue_box)
 	dialogue_box.complete.connect(_on_dialogue_finished)
 	player.stop_physics_input()
@@ -76,4 +76,9 @@ func _on_dialogue_finished(scene):
 
 func _on_scene_1_area_area_entered(area: Area2D) -> void:
 	if next_scene == Scenes.SCENE_1:
-		_play_cutscene(Scenes.SCENE_1)
+		_play_cutscene()
+
+
+func _on_scene_area_2_area_entered(area: Area2D) -> void:
+	if next_scene == Scenes.SCENE_2:
+		_play_cutscene()

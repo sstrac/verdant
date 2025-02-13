@@ -17,7 +17,7 @@ func _ready():
 	timer.timeout.connect(grow)
 	
 
-func interact():
+func interact(_player):
 	if waterable:
 		rect.texture = TREE_0
 		timer.start()

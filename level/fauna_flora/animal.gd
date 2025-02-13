@@ -1,4 +1,4 @@
-extends CharacterBody2D
+extends Interactable
 
 
 const FLYING_PIG: SpriteFrames = preload("res://assets/spriteframes/flying_pig.tres")
@@ -10,7 +10,14 @@ func _ready():
 	await get_tree().create_timer(randf()).timeout
 	animated_sprite.play()
 	
+
+func interact(_player):
+	get_node("Hearts").emitting = true
+	animated_sprite.speed_scale *= 4
+	await get_tree().create_timer(0.5).timeout
+	animated_sprite.speed_scale = 1
 	
+
 func evolve():
 	get_node("GPUParticles2D").emitting = true
 	await get_tree().create_timer(0.5).timeout

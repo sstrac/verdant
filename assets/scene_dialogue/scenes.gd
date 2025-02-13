@@ -15,9 +15,9 @@ const SCENE_1: Dictionary = {
 	},
 	'script':
 	[
-		"right:This is Globjulob...?", \
-		"left:Seems a bit run down", \
-		"right:My modules are tingling, something's not right. Let's look around", \
+		"right:This is Globjulob...?",
+		"left:Seems a bit run down",
+		"right:My modules are tingling, something's not right. Let's look around",
 		"left:You're... modules?"
 	]
 }
@@ -28,5 +28,9 @@ const SCENE_2: Dictionary = {
 		"left": CHARACTER_TEXTURE
 	},
 	'script':
-	[]
+	[
+		"right:These are so cute!",
+		"left:They look a lot like Earth pigs. But what would they be doing here?",
+		"right:They're aren't many of them, I wonder if there are others somewhere",
+	]
 }

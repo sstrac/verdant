@@ -10,6 +10,5 @@ func _init():
 func perform(player):
 	if player.closest_interactable:
 		# Remove destroyable will be a different ability
-		if player.closest_interactable.obtainable or player.closest_interactable.destroyable:
-			player.closest_interactable.interact()
-			player.available_abilities.append(Watering.new())
+		if player.closest_interactable.requires_hand:
+			player.closest_interactable.interact(player)

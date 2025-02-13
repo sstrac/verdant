@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://dleajr8g6u06r"]
+[gd_scene load_steps=9 format=3 uid="uid://dleajr8g6u06r"]
 
 [ext_resource type="SpriteFrames" uid="uid://c16h02hhf5v6b" path="res://assets/spriteframes/pig.tres" id="1_ydo0i"]
 [ext_resource type="Script" path="res://level/fauna_flora/animal.gd" id="2_1u7pc"]
+[ext_resource type="Texture2D" uid="uid://ddvdnh8s448m6" path="res://assets/textures/heart_mini.png" id="3_y0ydy"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_en5xq"]
 size = Vector2(14, 10)
@@ -22,11 +23,17 @@ gravity = Vector3(0, 0, 0)
 scale_max = 2.0
 color_ramp = SubResource("GradientTexture1D_enxeu")
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_hge5e"]
+radius = 12.0
+
 [node name="Animal" type="CharacterBody2D"]
 script = ExtResource("2_1u7pc")
+requires_hand = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("1_ydo0i")
+autoplay = "default"
+frame_progress = 0.77326
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 2)
@@ -40,3 +47,20 @@ lifetime = 6.0
 one_shot = true
 speed_scale = 3.0
 explosiveness = 1.0
+
+[node name="Hearts" type="CPUParticles2D" parent="."]
+position = Vector2(0, -6)
+emitting = false
+amount = 3
+one_shot = true
+texture = ExtResource("3_y0ydy")
+direction = Vector2(0, -1)
+gravity = Vector2(0, 0)
+initial_velocity_min = 15.0
+initial_velocity_max = 15.0
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(-1, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_hge5e")

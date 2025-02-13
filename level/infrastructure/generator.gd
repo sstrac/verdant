@@ -10,7 +10,7 @@ func _ready():
 	z_index = position.y
 
 
-func interact():
+func interact(_player):
 	if not broken:
 		animation_player.play('break')
 		smoke.visible = false
