@@ -2,6 +2,7 @@ extends Node2D
 
 const LERP_SPEED = 10
 const VECTOR_16 = Vector2i(16, 16)
+const DIALOGUE_BOX = preload("res://dialogue/dialogue_box.tscn")
 
 
 @onready var player = get_node("Player")
@@ -12,6 +13,7 @@ const VECTOR_16 = Vector2i(16, 16)
 @onready var surface_layer: TileMapLayer = get_node("SurfaceLayer")
 @onready var ui = get_node("CanvasLayer/UI")
 
+var next_scene = Scenes.SCENE_1
 	
 func _physics_process(delta: float) -> void:
 	camera.global_position = lerp(camera.global_position, player.global_position, delta * LERP_SPEED)
@@ -37,10 +39,10 @@ func _revive_tile():
 func _input(event: InputEvent):
 	if event.is_action_pressed("execute"):
 		player.current_ability.perform(player)
-		_make_pigs_fly()
 	elif event.is_action_pressed("tab"):
 		player.switch_abilities()
 		ui.change_ability(player.current_ability)
+
 
 func _set_z_index_for_surface_layer():
 	var surface_cell: Vector2i = surface_layer.local_to_map(player.position)
@@ -54,3 +56,13 @@ func _set_z_index_for_surface_layer():
 func _make_pigs_fly():
 	for animal in animals:
 		animal.evolve()
+
+
+func _play_cutscene(scene):
+	var dialogue_box = DIALOGUE_BOX.instantiate()
+	dialogue_box.scene = scene
+	add_child(dialogue_box)
+
+
+func _on_scene_1_area_area_entered(area: Area2D) -> void:
+	_play_cutscene(Scenes.SCENE_1)

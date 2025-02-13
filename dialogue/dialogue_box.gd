@@ -8,22 +8,21 @@ var finished: bool
 @onready var right_sprite = get_node("RightSprite")
 @onready var text = get_node("DialogueBox/RichTextLabel")
 
-var scene = Scenes.SCENE_1
-var scene_characters = Scenes.SCENE_1_CHARACTERS
+var scene
 
 
 func _ready():
 	_show_dialogue()
 	
-	
 func _show_dialogue():
-	var split_line = scene[tracker].split(":")
+	var characters = scene.get('characters')
+	var split_line = scene.get('script')[tracker].split(":")
 	if split_line[0].to_lower() == "right":
-		right_sprite.texture = scene_characters["right"]
+		right_sprite.texture = characters["right"]
 		right_sprite.show()
 		left_sprite.hide()
 	elif split_line[0].to_lower() == 'left':
-		left_sprite.texture = scene_characters["left"]
+		left_sprite.texture = characters["left"]
 		left_sprite.show()
 		right_sprite.hide()
 	text.text = split_line[1]
