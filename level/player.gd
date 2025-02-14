@@ -5,6 +5,8 @@ const ORTHOGONAL_SPEED = 100
 const DIAGONAL_SPEED = 75
 
 @onready var animation_tree = get_node("AnimationTree")
+@onready var audio_stream_player: AudioStreamPlayer = get_node("AudioStreamPlayer")
+
 
 var last_velocity = Vector2.DOWN
 var available_abilities = []

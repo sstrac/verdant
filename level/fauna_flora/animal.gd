@@ -4,6 +4,7 @@ extends Interactable
 const FLYING_PIG: SpriteFrames = preload("res://assets/spriteframes/flying_pig.tres")
 
 @onready var animated_sprite = get_node("AnimatedSprite2D")
+@onready var audio_stream_player = get_node("AudioStreamPlayer")
 
 func _ready():
 	z_index = global_position.y
@@ -12,6 +13,7 @@ func _ready():
 	
 
 func interact(_player):
+	audio_stream_player.play()
 	get_node("Hearts").emitting = true
 	animated_sprite.speed_scale *= 4
 	await get_tree().create_timer(0.5).timeout

@@ -14,8 +14,15 @@ const DIALOGUE_BOX = preload("res://dialogue/dialogue_box.tscn")
 @onready var ui_canvas_layer = get_node("CanvasLayer")
 @onready var ui = get_node("CanvasLayer/UI")
 
+@onready var powerlines = get_node("Infrastructure/PowerLineGroup")
+@onready var drawings = get_node("Drawings")
+
 var next_scene = Scenes.SCENE_1
-	
+
+func _ready():
+	drawings.powerlines = powerlines.get_children().map(func(p): return p.connector.global_position)
+
+
 func _physics_process(delta: float) -> void:
 	camera.global_position = lerp(camera.global_position, player.global_position, delta * LERP_SPEED)
 
@@ -57,8 +64,8 @@ func _set_z_index_for_surface_layer():
 func _make_pigs_fly():
 	for animal in animals:
 		animal.evolve()
-
-
+	
+	
 func _play_cutscene():
 	var dialogue_box = DIALOGUE_BOX.instantiate()
 	dialogue_box.scene = next_scene

@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://dleajr8g6u06r"]
+[gd_scene load_steps=10 format=3 uid="uid://dleajr8g6u06r"]
 
 [ext_resource type="SpriteFrames" uid="uid://c16h02hhf5v6b" path="res://assets/spriteframes/pig.tres" id="1_ydo0i"]
 [ext_resource type="Script" path="res://level/fauna_flora/animal.gd" id="2_1u7pc"]
 [ext_resource type="Texture2D" uid="uid://ddvdnh8s448m6" path="res://assets/textures/heart_mini.png" id="3_y0ydy"]
+[ext_resource type="AudioStream" uid="uid://dm2b6ws6hwiw3" path="res://assets/sfx/pig_low.wav" id="4_64uh6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_en5xq"]
 size = Vector2(14, 10)
@@ -33,7 +34,7 @@ requires_hand = true
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("1_ydo0i")
 autoplay = "default"
-frame_progress = 0.77326
+frame_progress = 0.87394
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 2)
@@ -64,3 +65,6 @@ position = Vector2(-1, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_hge5e")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_64uh6")

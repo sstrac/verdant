@@ -1,0 +1,10 @@
+[gd_resource type="AudioStreamRandomizer" load_steps=3 format=3 uid="uid://dhnecdvyemmhm"]
+
+[ext_resource type="AudioStream" uid="uid://e8nb17h27c1e" path="res://assets/sfx/water_long.wav" id="1_tsvur"]
+[ext_resource type="AudioStream" uid="uid://cylnjxha0ibn0" path="res://assets/sfx/water_short.wav" id="2_h8vw2"]
+
+[resource]
+streams_count = 2
+stream_0/stream = ExtResource("1_tsvur")
+stream_0/weight = 1.1
+stream_1/stream = ExtResource("2_h8vw2")
