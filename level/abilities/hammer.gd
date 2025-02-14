@@ -1,13 +1,13 @@
 extends Ability
 
 
-class_name Hand
+class_name Hammer
 
 func _init():
-	texture = preload("res://assets/textures/infrastructure/hand.png")
+	texture = preload("res://assets/textures/infrastructure/building.png")
 	
 	
 func perform(player):
 	if player.closest_interactable:
-		if player.closest_interactable.requires_hand:
+		if player.closest_interactable.destroyable:
 			player.closest_interactable.interact(player)

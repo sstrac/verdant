@@ -1,7 +1,7 @@
 extends Node2D
 
 const NUMBER_DISTORTION_POINTS = 5
-const MAX_DEVIATION = Vector2(2, 2)
+const MAX_DEVIATION = 5
 
 @onready var timer: Timer = get_node("Timer")
 
@@ -13,38 +13,40 @@ var powerlines = []:
 		queue_redraw()
 
 
-func recalculate_distortion_points():
-	distortion_points = []
-	var i = 1
-	while i < powerlines.size():
-		var line = []
-		var anchor = powerlines[i-1]
-		line.append(powerlines[i-1])
-		for j in range(NUMBER_DISTORTION_POINTS):
-			
-			var middle = powerlines[i-1] + (powerlines[i] - powerlines[i-1]) / 2
-			var range_end
-			if anchor < middle:
-				range_end = middle
-			else:
-				range_end = powerlines[i]
-			var rand_x = randf_range(anchor.x, range_end.x)
-			var rand_y = randf_range(anchor.y, range_end.y)
-			anchor = Vector2(rand_x, rand_y)
-			
-			line.append(anchor)
-		line.append(powerlines[i])
-		distortion_points.append(line)
-		i += 1
-	
-	queue_redraw()
-
-
 func _ready():
 	timer.timeout.connect(recalculate_distortion_points)
 	timer.start()
+	z_index = 999
+
+
+func recalculate_distortion_points():
+	distortion_points = []
+	var i = 1
 	
-# Called when the node enters the scene tree for the first time.
+	while i < powerlines.size():
+		_create_distortion_points(i-1, i)
+		i += 1
+	
+	if not powerlines.size() == 0:
+		_create_distortion_points(0, powerlines.size() - 1)
+	
+	queue_redraw()
+
+func _create_distortion_points(i_start, i_end):
+	var line = []
+	var anchor: Vector2 = powerlines[i_start]
+	line.append(powerlines[i_start])
+	
+	var difference = powerlines[i_end] - powerlines[i_start]
+	var gap = difference / NUMBER_DISTORTION_POINTS
+	for j in range(NUMBER_DISTORTION_POINTS):
+		var distortion_point: Vector2 = powerlines[i_start] + ((j + 1) * gap)
+		distortion_point += Vector2(randf_range(-MAX_DEVIATION, MAX_DEVIATION), randf_range(-MAX_DEVIATION, MAX_DEVIATION))
+		line.append(distortion_point)
+	line.append(powerlines[i_end])
+	distortion_points.append(line)
+		
+
 func _draw():
 	for line in distortion_points:
 		var i = 1

@@ -16,11 +16,22 @@ const DIALOGUE_BOX = preload("res://dialogue/dialogue_box.tscn")
 
 @onready var powerlines = get_node("Infrastructure/PowerLineGroup")
 @onready var drawings = get_node("Drawings")
+@onready var pig_path_follow = get_node("%TrappedPigPathFollow")
 
 var next_scene = Scenes.SCENE_1
+var powerlines_quest_complete = false
+
 
 func _ready():
-	drawings.powerlines = powerlines.get_children().map(func(p): return p.connector.global_position)
+	_draw_electricity()
+	for powerline in powerlines.get_children():
+		powerline.has_broken.connect(_draw_electricity)
+
+
+func _draw_electricity():
+	drawings.powerlines = powerlines.get_children() \
+		.filter(func(p): return !p.broken) \
+		.map(func(p): return p.connector.global_position)
 
 
 func _physics_process(delta: float) -> void:
@@ -29,6 +40,14 @@ func _physics_process(delta: float) -> void:
 
 func _process(delta):
 	_set_z_index_for_surface_layer()
+	_check_powerlines_broken()
+
+
+func _check_powerlines_broken():
+	if powerlines.get_children().all(func(p): return p.broken):
+		powerlines_quest_complete = true
+		if pig_path_follow.progress < 735:
+			pig_path_follow.progress += 0.5
 
 
 func _revive_tile():
@@ -79,6 +98,7 @@ func _on_dialogue_finished(scene):
 	
 	match scene:
 		Scenes.SCENE_1: next_scene = Scenes.SCENE_2
+		Scenes.SCENE_2: next_scene = null
 
 
 func _on_scene_1_area_area_entered(area: Area2D) -> void:
