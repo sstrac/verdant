@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=4 uid="uid://ecdlgh485rbl"]
+[gd_scene load_steps=25 format=4 uid="uid://ecdlgh485rbl"]
 
 [ext_resource type="Script" path="res://level/level.gd" id="1_n2urj"]
 [ext_resource type="TileSet" uid="uid://gapk0nxp88nx" path="res://assets/level_tileset.tres" id="2_rjj6t"]
@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://mpvlloo1542m" path="res://level/infrastructure/power_line.tscn" id="9_ggx7j"]
 [ext_resource type="PackedScene" uid="uid://cjkbu32ldwjyk" path="res://level/infrastructure/watering_can.tscn" id="9_ulln3"]
 [ext_resource type="PackedScene" uid="uid://d16tblhjm8dig" path="res://level/infrastructure/hammer.tscn" id="12_vxclb"]
+[ext_resource type="AudioStream" uid="uid://cu0fy5sn4r11g" path="res://assets/sfx/jameswrowles__hum1.wav" id="13_7o7fs"]
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_ec75a"]
 b = Vector2(0, 700)
@@ -217,17 +218,24 @@ position = Vector2(998, 304)
 [node name="Hammer" parent="Infrastructure" instance=ExtResource("12_vxclb")]
 position = Vector2(1064, 450)
 
+[node name="ElectricalHumAudio" type="AudioStreamPlayer2D" parent="Infrastructure"]
+position = Vector2(167, 66)
+stream = ExtResource("13_7o7fs")
+volume_db = -3.496
+autoplay = true
+max_distance = 200.0
+
 [node name="PowerLineGroup" type="Node2D" parent="Infrastructure"]
-position = Vector2(-5, 7)
+position = Vector2(167, 66)
 
 [node name="PowerLine" parent="Infrastructure/PowerLineGroup" instance=ExtResource("9_ggx7j")]
-position = Vector2(128, 31)
+position = Vector2(-46, -15)
 
 [node name="PowerLine2" parent="Infrastructure/PowerLineGroup" instance=ExtResource("9_ggx7j")]
-position = Vector2(231, 31)
+position = Vector2(57, -15)
 
 [node name="PowerLine3" parent="Infrastructure/PowerLineGroup" instance=ExtResource("9_ggx7j")]
-position = Vector2(173, 100)
+position = Vector2(-1, 54)
 
 [node name="BrokenPowerLines" type="Node2D" parent="Infrastructure"]
 

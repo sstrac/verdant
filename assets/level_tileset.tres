@@ -16,7 +16,7 @@ tile_data = PackedInt32Array(0, 196610, 7, 65536, 196610, 8)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3tvgn"]
 texture = ExtResource("3_1tbhn")
-7:0/next_alternative_id = 2
+7:0/next_alternative_id = 3
 7:0/0 = 0
 7:0/2 = 2
 8:0/0 = 0

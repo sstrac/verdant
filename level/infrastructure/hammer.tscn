@@ -1,26 +1,24 @@
 [gd_scene load_steps=5 format=3 uid="uid://d16tblhjm8dig"]
 
 [ext_resource type="Script" path="res://level/infrastructure/hammer.gd" id="1_eawvo"]
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ygh6t"]
+[ext_resource type="Texture2D" uid="uid://ci273rjptagb" path="res://assets/textures/infrastructure/hammer_mini.png" id="2_qhc36"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cav40"]
-size = Vector2(14.5, 18)
+size = Vector2(16, 13)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_32giu"]
-radius = 16.0
+radius = 15.0333
 
 [node name="Hammer" type="StaticBody2D"]
 script = ExtResource("1_eawvo")
 requires_hand = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(18, 19)
-texture = SubResource("PlaceholderTexture2D_ygh6t")
+texture = ExtResource("2_qhc36")
 centered = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(8.75, 9)
+position = Vector2(8, 8.5)
 shape = SubResource("RectangleShape2D_cav40")
 
 [node name="Area2D" type="Area2D" parent="."]

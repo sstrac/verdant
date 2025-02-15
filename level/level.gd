@@ -17,6 +17,7 @@ const DIALOGUE_BOX = preload("res://dialogue/dialogue_box.tscn")
 @onready var powerlines = get_node("Infrastructure/PowerLineGroup")
 @onready var drawings = get_node("Drawings")
 @onready var pig_path_follow = get_node("%TrappedPigPathFollow")
+@onready var electrical_hum_audio = get_node("Infrastructure/ElectricalHumAudio")
 
 var next_scene = Scenes.SCENE_1
 
@@ -49,6 +50,7 @@ func _process(delta):
 func _check_powerlines_broken():
 	if powerlines.get_children().all(func(p): return p.broken):
 		powerlines_quest_complete = true
+		electrical_hum_audio.stop()
 		if pig_path_follow.progress < 735:
 			pig_path_follow.progress += 0.5
 
