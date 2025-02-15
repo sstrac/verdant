@@ -80,7 +80,7 @@ func _revive_tile():
 
 func _input(event: InputEvent):
 	if event.is_action_pressed("execute"):
-		_revive_tile()
+		#_revive_tile()
 		player.current_ability.perform(player)
 	elif event.is_action_pressed("tab"):
 		player.switch_abilities()

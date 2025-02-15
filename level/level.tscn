@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=4 uid="uid://ecdlgh485rbl"]
+[gd_scene load_steps=24 format=4 uid="uid://ecdlgh485rbl"]
 
 [ext_resource type="Script" path="res://level/level.gd" id="1_n2urj"]
 [ext_resource type="TileSet" uid="uid://gapk0nxp88nx" path="res://assets/level_tileset.tres" id="2_rjj6t"]
@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://dfbgv0erum7cb" path="res://level/infrastructure/generator.tscn" id="8_jxt2h"]
 [ext_resource type="PackedScene" uid="uid://mpvlloo1542m" path="res://level/infrastructure/power_line.tscn" id="9_ggx7j"]
 [ext_resource type="PackedScene" uid="uid://cjkbu32ldwjyk" path="res://level/infrastructure/watering_can.tscn" id="9_ulln3"]
+[ext_resource type="PackedScene" uid="uid://d16tblhjm8dig" path="res://level/infrastructure/hammer.tscn" id="12_vxclb"]
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_ec75a"]
 b = Vector2(0, 700)
@@ -211,7 +212,10 @@ position = Vector2(815, 536)
 position = Vector2(573, 263)
 
 [node name="WateringCan" parent="Infrastructure" instance=ExtResource("9_ulln3")]
-position = Vector2(990, 464)
+position = Vector2(998, 304)
+
+[node name="Hammer" parent="Infrastructure" instance=ExtResource("12_vxclb")]
+position = Vector2(1064, 450)
 
 [node name="PowerLineGroup" type="Node2D" parent="Infrastructure"]
 position = Vector2(-5, 7)
