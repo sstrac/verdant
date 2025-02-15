@@ -1,11 +1,19 @@
 extends Interactable
 
+const BROKEN_TEXTURE = preload("res://assets/textures/infrastructure/power_line_broken.png")
 
 @onready var connector = get_node("Connector")
+@onready var sprite = get_node("Sprite2D")
 
-@export var broken: bool = false
+
+@export var broken: bool = false:
+	set(b):
+		if not broken and b:
+			has_broken.emit()
+		broken = b
 
 signal has_broken
+
 
 func _ready():
 	z_index = global_position.y
@@ -14,6 +22,4 @@ func _ready():
 func interact(player):
 	if not broken:
 		broken = true
-		has_broken.emit()
-		#animation_player.play('break')
-		#smoke.visible = false
+		sprite.texture = BROKEN_TEXTURE

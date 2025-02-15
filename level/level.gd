@@ -11,6 +11,7 @@ const DIALOGUE_BOX = preload("res://dialogue/dialogue_box.tscn")
 
 @onready var ground_layer: TileMapLayer = get_node("GroundLayer")
 @onready var surface_layer: TileMapLayer = get_node("SurfaceLayer")
+
 @onready var ui_canvas_layer = get_node("CanvasLayer")
 @onready var ui = get_node("CanvasLayer/UI")
 
@@ -27,17 +28,26 @@ var watering_holes_quest_complete = false
 
 
 func _ready():
-	_draw_electricity()
+	_redraw_electricity()
 	player.health_changed.connect(_on_health_changed)
+	player.died.connect(_on_death)
 	for powerline in powerlines.get_children():
-		powerline.has_broken.connect(_draw_electricity)
+		powerline.has_broken.connect(_on_powerline_broken)
 
 
 func _on_health_changed():
 	ui.set_health(player.health)
 	
+
+func _on_death():
+	get_tree().change_scene_to_file("res://restart_overlay.tscn")
+
 	
-func _draw_electricity():
+func _on_powerline_broken():
+	_redraw_electricity()
+
+
+func _redraw_electricity():
 	drawings.powerlines = powerlines.get_children() \
 		.filter(func(p): return !p.broken) \
 		.map(func(p): return p.connector.global_position)

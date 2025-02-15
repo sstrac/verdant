@@ -37,12 +37,13 @@ func _create_distortion_points(i_start, i_end):
 	var anchor: Vector2 = powerlines[i_start]
 	line.append(powerlines[i_start])
 	
-	var difference = powerlines[i_end] - powerlines[i_start]
-	var gap = difference / NUMBER_DISTORTION_POINTS
-	for j in range(NUMBER_DISTORTION_POINTS):
-		var distortion_point: Vector2 = powerlines[i_start] + ((j + 1) * gap)
-		distortion_point += Vector2(randf_range(-MAX_DEVIATION, MAX_DEVIATION), randf_range(-MAX_DEVIATION, MAX_DEVIATION))
-		line.append(distortion_point)
+	if powerlines.size() > 2:
+		var difference = powerlines[i_end] - powerlines[i_start]
+		var gap = difference / NUMBER_DISTORTION_POINTS
+		for j in range(NUMBER_DISTORTION_POINTS):
+			var distortion_point: Vector2 = powerlines[i_start] + ((j + 1) * gap)
+			distortion_point += Vector2(randf_range(-MAX_DEVIATION, MAX_DEVIATION), randf_range(-MAX_DEVIATION, MAX_DEVIATION))
+			line.append(distortion_point)
 	line.append(powerlines[i_end])
 	distortion_points.append(line)
 		

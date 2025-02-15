@@ -16,12 +16,14 @@ var health = 10:
 	set(h):
 		health = h
 		health_changed.emit()
+		if health == 0:
+			died.emit()
 
 signal health_changed
-
+signal died
 
 func _ready():
-	available_abilities.append(Abilities.WATERING)
+	available_abilities.append(Abilities.HAND)
 	current_ability = available_abilities[0]
 
 
