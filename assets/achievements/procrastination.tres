@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="Achievement" load_steps=3 format=3 uid="uid://d6k0wi0tvrnp"]
+
+[ext_resource type="Script" path="res://assets/achievements/achievement.gd" id="1_617g7"]
+[ext_resource type="Texture2D" uid="uid://bmibrp3yqqt0c" path="res://assets/textures/ui/procrastination_achievement.png" id="2_0x5ya"]
+
+[resource]
+script = ExtResource("1_617g7")
+text = "Procrastination"
+texture = ExtResource("2_0x5ya")

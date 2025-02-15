@@ -6,7 +6,7 @@ uniform sampler2D noise_texture: repeat_enable, filter_nearest;
 // Fog density
 uniform float density: hint_range(0.0, 1.0) = 0.25;
 // Fog speed
-uniform vec2 speed = vec2(0.02, 0.01);
+uniform vec2 speed = vec2(0.01, 0.01);
 
 
 // Called for every pixel the material is visible on

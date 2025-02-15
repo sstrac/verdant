@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b621a5s1lysu7"
-path="res://.godot/imported/main_character_spritesheet.png-6d1e59f5bc6af95a5bc4b9dd8f86cdeb.ctex"
+uid="uid://cr1ij3yfm5jlp"
+path="res://.godot/imported/achievement_tab.png-560a534cb38696c62df595726ab693c0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/main_character_spritesheet.png"
-dest_files=["res://.godot/imported/main_character_spritesheet.png-6d1e59f5bc6af95a5bc4b9dd8f86cdeb.ctex"]
+source_file="res://assets/textures/ui/achievement_tab.png"
+dest_files=["res://.godot/imported/achievement_tab.png-560a534cb38696c62df595726ab693c0.ctex"]
 
 [params]
 

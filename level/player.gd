@@ -12,6 +12,7 @@ var last_velocity = Vector2.DOWN
 var available_abilities = []
 var current_ability: Ability
 var closest_interactable: Interactable
+
 var health = 10:
 	set(h):
 		health = h
@@ -19,8 +20,21 @@ var health = 10:
 		if health == 0:
 			died.emit()
 
+var pig_pet_count = 0:
+	set(p):
+		if p < 10:
+			pig_pet_count = p
+		elif not procrastinated:
+			procrastinated = true
+			procrastination.emit()
+			
+
+var procrastinated: bool = false
+
 signal health_changed
 signal died
+signal procrastination
+
 
 func _ready():
 	available_abilities.append(Abilities.HAND)

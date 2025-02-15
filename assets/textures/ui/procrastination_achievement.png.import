@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dthvantorq1el"
-path="res://.godot/imported/characterSprite.png-561472057c507ad74660e0a8eeaaee3e.ctex"
+uid="uid://boi612a72wbdg"
+path="res://.godot/imported/procrastination_achievement.png-85147ae936ec73b770466485898ad285.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/characterSprite.png"
-dest_files=["res://.godot/imported/characterSprite.png-561472057c507ad74660e0a8eeaaee3e.ctex"]
+source_file="res://assets/textures/ui/procrastination_achievement.png"
+dest_files=["res://.godot/imported/procrastination_achievement.png-85147ae936ec73b770466485898ad285.ctex"]
 
 [params]
 

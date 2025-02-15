@@ -3,9 +3,9 @@ extends Node
 
 class_name Scenes
 
-const CHARACTER_TEXTURE = preload("res://assets/textures/dialogue_character.png")
+const CHARACTER_TEXTURE = preload("res://assets/textures/dialogue/dialogue_character.png")
 const PIG_TEXTURE = preload("res://assets/textures/fauna_flora/pig.png")
-const COMPANION_TEXTURE = preload("res://assets/textures/dialogue_companion.png")
+const COMPANION_TEXTURE = preload("res://assets/textures/dialogue/dialogue_companion.png")
 
 
 const SCENE_1: Dictionary = {

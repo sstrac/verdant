@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dvatnvihqet4o"
-path="res://.godot/imported/dialogue_companion_full_res.png-923fe61547703761ad22e05707cc67c8.ctex"
+uid="uid://b5avq4py4xbev"
+path="res://.godot/imported/controls.png-adef16f06677cff263d037738a62b3e2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/dialogue_companion_full_res.png"
-dest_files=["res://.godot/imported/dialogue_companion_full_res.png-923fe61547703761ad22e05707cc67c8.ctex"]
+source_file="res://assets/textures/ui/controls.png"
+dest_files=["res://.godot/imported/controls.png-adef16f06677cff263d037738a62b3e2.ctex"]
 
 [params]
 

@@ -5,7 +5,16 @@ extends Interactable
 @onready var smoke = get_node("Smoke")
 
 
-var broken = false
+var broken = false:
+	set(b):
+		var broken_before = broken
+		broken = b
+		if not broken_before and broken:
+			has_broken.emit()
+		
+
+signal has_broken
+	
 
 func _ready():
 	z_index = position.y

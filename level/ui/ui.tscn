@@ -1,9 +1,12 @@
-[gd_scene load_steps=5 format=3 uid="uid://bvrrafoamyu4e"]
+[gd_scene load_steps=8 format=3 uid="uid://bvrrafoamyu4e"]
 
 [ext_resource type="SpriteFrames" uid="uid://dj38rkqbxu15l" path="res://assets/spriteframes/progress_bar.tres" id="1_cko8l"]
-[ext_resource type="Script" path="res://level/ui.gd" id="1_m0i3k"]
+[ext_resource type="Script" path="res://level/ui/ui.gd" id="1_m0i3k"]
 [ext_resource type="Texture2D" uid="uid://d14qextxo2w4h" path="res://assets/textures/infrastructure/hand.png" id="3_xrpxd"]
-[ext_resource type="Texture2D" uid="uid://b5avq4py4xbev" path="res://assets/textures/controls.png" id="4_w8bul"]
+[ext_resource type="Texture2D" uid="uid://b5avq4py4xbev" path="res://assets/textures/ui/controls.png" id="4_w8bul"]
+[ext_resource type="Texture2D" uid="uid://boi612a72wbdg" path="res://assets/textures/ui/procrastination_achievement.png" id="5_ixal0"]
+[ext_resource type="AudioStream" uid="uid://b6je7ikkm8bel" path="res://assets/sfx/laurenponder__achievment-chimes.wav" id="6_4yp7s"]
+[ext_resource type="FontFile" uid="uid://dihvo2v27tls1" path="res://assets/Chewy-Regular.ttf" id="6_6xi8u"]
 
 [node name="UI" type="Control"]
 layout_mode = 3
@@ -14,7 +17,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_m0i3k")
 
-[node name="Control" type="Control" parent="."]
+[node name="Status" type="Control" parent="."]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -25,7 +28,8 @@ offset_right = 284.0
 offset_bottom = -19.0
 grow_vertical = 0
 
-[node name="ProgressBar" type="ProgressBar" parent="Control"]
+[node name="ProgressBar" type="ProgressBar" parent="Status"]
+unique_name_in_owner = true
 self_modulate = Color(1, 0.0607081, 0.191774, 1)
 layout_mode = 2
 offset_right = 210.0
@@ -37,14 +41,14 @@ step = 1.0
 value = 10.0
 show_percentage = false
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Control"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Status"]
 position = Vector2(-15, -11)
 sprite_frames = ExtResource("1_cko8l")
 autoplay = "default"
 frame_progress = 0.343227
 centered = false
 
-[node name="Control" type="Control" parent="Control"]
+[node name="Control" type="Control" parent="Status"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -57,7 +61,7 @@ grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(2, 2)
 
-[node name="LeftLabel" type="Label" parent="Control/Control"]
+[node name="LeftLabel" type="Label" parent="Status/Control"]
 texture_filter = 1
 layout_mode = 1
 anchors_preset = 2
@@ -70,7 +74,8 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 4
 text = "<"
 
-[node name="CurrentAbility" type="TextureRect" parent="Control/Control"]
+[node name="CurrentAbility" type="TextureRect" parent="Status/Control"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(40, 50)
 layout_mode = 1
 anchors_preset = 7
@@ -87,7 +92,7 @@ grow_vertical = 0
 texture = ExtResource("3_xrpxd")
 stretch_mode = 3
 
-[node name="RightLabel" type="Label" parent="Control/Control"]
+[node name="RightLabel" type="Label" parent="Status/Control"]
 texture_filter = 1
 layout_mode = 1
 anchors_preset = 3
@@ -106,3 +111,34 @@ text = ">"
 [node name="Controls" type="Sprite2D" parent="."]
 position = Vector2(72, 545)
 texture = ExtResource("4_w8bul")
+
+[node name="AchievementPopup" type="TextureRect" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 996.0
+offset_top = 585.0
+offset_right = 1138.0
+offset_bottom = 635.0
+texture = ExtResource("5_ixal0")
+
+[node name="Label" type="Label" parent="AchievementPopup"]
+layout_mode = 0
+offset_left = 31.0
+offset_top = 25.0
+offset_right = 137.0
+offset_bottom = 48.0
+theme_override_fonts/font = ExtResource("6_6xi8u")
+text = "Procrastination"
+
+[node name="Label2" type="Label" parent="AchievementPopup"]
+modulate = Color(0.85098, 0.764706, 1, 1)
+layout_mode = 0
+offset_left = 20.0
+offset_top = 2.0
+offset_right = 122.0
+offset_bottom = 25.0
+text = "Achievement"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_4yp7s")
+volume_db = 4.37

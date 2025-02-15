@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ckf1l8xq0kugc"
-path="res://.godot/imported/dialogue_companion.png-b6c4caa5d5b3b852f2c388ffa7822c53.ctex"
+uid="uid://ddvdnh8s448m6"
+path="res://.godot/imported/heart_mini.png-465b61446611062ba831b43a3921e25b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/dialogue_companion.png"
-dest_files=["res://.godot/imported/dialogue_companion.png-b6c4caa5d5b3b852f2c388ffa7822c53.ctex"]
+source_file="res://assets/textures/fauna_flora/heart_mini.png"
+dest_files=["res://.godot/imported/heart_mini.png-465b61446611062ba831b43a3921e25b.ctex"]
 
 [params]
 

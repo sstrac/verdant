@@ -8,9 +8,11 @@ const BROKEN_TEXTURE = preload("res://assets/textures/infrastructure/power_line_
 
 @export var broken: bool = false:
 	set(b):
-		if not broken and b:
-			has_broken.emit()
+		var broken_before = broken
 		broken = b
+		if not broken_before and broken:
+			has_broken.emit()
+		
 
 signal has_broken
 

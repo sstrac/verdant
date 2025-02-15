@@ -1,7 +1,7 @@
 [gd_scene load_steps=26 format=3 uid="uid://cmrnqmwon6ybf"]
 
 [ext_resource type="Script" path="res://level/player.gd" id="1_3tpou"]
-[ext_resource type="Texture2D" uid="uid://dthvantorq1el" path="res://assets/textures/characterSprite.png" id="2_t53cn"]
+[ext_resource type="Texture2D" uid="uid://dthvantorq1el" path="res://assets/textures/spritesheet/characterSprite.png" id="2_t53cn"]
 [ext_resource type="AnimationNodeBlendSpace2D" uid="uid://dvtrd5ydfe7vv" path="res://assets/animations/player_walk_blend.tres" id="3_fspav"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_667in"]

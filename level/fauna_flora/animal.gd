@@ -12,7 +12,8 @@ func _ready():
 	animated_sprite.play()
 	
 
-func interact(_player):
+func interact(player):
+	player.pig_pet_count += 1
 	audio_stream_player.play()
 	get_node("Hearts").emitting = true
 	animated_sprite.speed_scale *= 4

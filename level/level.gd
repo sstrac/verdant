@@ -16,23 +16,31 @@ const DIALOGUE_BOX = preload("res://dialogue/dialogue_box.tscn")
 @onready var ui = get_node("CanvasLayer/UI")
 
 @onready var powerlines = get_node("Infrastructure/PowerLineGroup")
+@onready var generators = get_node("Infrastructure/Generators")
 @onready var drawings = get_node("Drawings")
 @onready var pig_path_follow = get_node("%TrappedPigPathFollow")
 @onready var electrical_hum_audio = get_node("Infrastructure/ElectricalHumAudio")
+@onready var fogs = get_node("Fogs")
 
 var next_scene = null#TODO Scenes.SCENE_1
 
 var powerlines_quest_complete = false
 var generators_quest_complete = false
 var watering_holes_quest_complete = false
+var pig_path_follow_distance = 0
 
 
 func _ready():
 	_redraw_electricity()
 	player.health_changed.connect(_on_health_changed)
 	player.died.connect(_on_death)
+	player.procrastination.connect(_on_procrastination)
+	
 	for powerline in powerlines.get_children():
 		powerline.has_broken.connect(_on_powerline_broken)
+	
+	for generator in generators.get_children():
+		generator.has_broken.connect(_on_generator_broken)
 
 
 func _on_health_changed():
@@ -45,10 +53,23 @@ func _on_death():
 	
 func _on_powerline_broken():
 	_redraw_electricity()
+	_check_all_powerlines_broken()
+
+
+func _on_generator_broken():
+	print(fogs.modulate.a)
+	fogs.modulate.a -= 0.4
+	if generators.get_children().all(func(p): return p.broken):
+		generators_quest_complete = true
+		
+	
+
+func _on_procrastination():
+	ui.show_achievement(load("res://assets/achievements/procrastination.tres"))
 
 
 func _redraw_electricity():
-	drawings.powerlines = powerlines.get_children() \
+	drawings.working_powerlines = powerlines.get_children() \
 		.filter(func(p): return !p.broken) \
 		.map(func(p): return p.connector.global_position)
 
@@ -59,15 +80,16 @@ func _physics_process(delta: float) -> void:
 
 func _process(delta):
 	_set_z_index_for_surface_layer()
-	_check_powerlines_broken()
+	
+	if pig_path_follow.progress < pig_path_follow_distance:
+		pig_path_follow.progress += 0.7
 
 
-func _check_powerlines_broken():
+func _check_all_powerlines_broken():
 	if powerlines.get_children().all(func(p): return p.broken):
 		powerlines_quest_complete = true
 		electrical_hum_audio.stop()
-		if pig_path_follow.progress < 735:
-			pig_path_follow.progress += 0.5
+		pig_path_follow_distance = 735
 
 
 func _perform_revive_tile():

@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=4 uid="uid://ecdlgh485rbl"]
+[gd_scene load_steps=26 format=4 uid="uid://ecdlgh485rbl"]
 
 [ext_resource type="Script" path="res://level/level.gd" id="1_n2urj"]
 [ext_resource type="TileSet" uid="uid://gapk0nxp88nx" path="res://assets/level_tileset.tres" id="2_rjj6t"]
@@ -8,7 +8,7 @@
 [ext_resource type="Shader" path="res://assets/shaders/fog.gdshader" id="5_r83v5"]
 [ext_resource type="PackedScene" uid="uid://bc0f5b42jpt6b" path="res://level/fauna_flora/tree.tscn" id="6_oaafg"]
 [ext_resource type="Shader" path="res://assets/shaders/fog2.gdshader" id="7_cnaak"]
-[ext_resource type="PackedScene" uid="uid://bvrrafoamyu4e" path="res://level/ui.tscn" id="7_n7j3b"]
+[ext_resource type="PackedScene" uid="uid://bvrrafoamyu4e" path="res://level/ui/ui.tscn" id="7_n7j3b"]
 [ext_resource type="Curve2D" uid="uid://dledlqp68iy37" path="res://assets/trapped_pig_path.tres" id="7_typp3"]
 [ext_resource type="PackedScene" uid="uid://dfbgv0erum7cb" path="res://level/infrastructure/generator.tscn" id="8_jxt2h"]
 [ext_resource type="PackedScene" uid="uid://mpvlloo1542m" path="res://level/infrastructure/power_line.tscn" id="9_ggx7j"]
@@ -45,11 +45,15 @@ shader_parameter/density = 1.0
 shader_parameter/speed = Vector2(0.02, 0.01)
 shader_parameter/noise_texture = SubResource("NoiseTexture2D_53v8h")
 
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_qifei"]
+frequency = 0.0007
+
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_7b46r"]
 width = 500
 height = 250
 seamless = true
 seamless_blend_skirt = 0.75
+noise = SubResource("FastNoiseLite_qifei")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kjwur"]
 shader = ExtResource("7_cnaak")
@@ -206,20 +210,11 @@ loop = false
 
 [node name="Infrastructure" type="Node2D" parent="."]
 
-[node name="Generator" parent="Infrastructure" instance=ExtResource("8_jxt2h")]
-position = Vector2(815, 536)
-
-[node name="Generator2" parent="Infrastructure" instance=ExtResource("8_jxt2h")]
-position = Vector2(564, 262)
-
-[node name="Generator3" parent="Infrastructure" instance=ExtResource("8_jxt2h")]
-position = Vector2(253, 571)
-
 [node name="WateringCan" parent="Infrastructure" instance=ExtResource("9_ulln3")]
 position = Vector2(998, 304)
 
 [node name="Hammer" parent="Infrastructure" instance=ExtResource("12_vxclb")]
-position = Vector2(1064, 450)
+position = Vector2(1064, 453)
 
 [node name="ElectricalHumAudio" type="AudioStreamPlayer2D" parent="Infrastructure"]
 position = Vector2(167, 66)
@@ -229,7 +224,7 @@ autoplay = true
 max_distance = 300.0
 
 [node name="PowerLineGroup" type="Node2D" parent="Infrastructure"]
-position = Vector2(167, 66)
+position = Vector2(169, 63)
 
 [node name="PowerLine" parent="Infrastructure/PowerLineGroup" instance=ExtResource("9_ggx7j")]
 position = Vector2(-46, -15)
@@ -250,6 +245,17 @@ broken = true
 position = Vector2(707, 568)
 broken = true
 
+[node name="Generators" type="Node2D" parent="Infrastructure"]
+
+[node name="Generator" parent="Infrastructure/Generators" instance=ExtResource("8_jxt2h")]
+position = Vector2(815, 536)
+
+[node name="Generator2" parent="Infrastructure/Generators" instance=ExtResource("8_jxt2h")]
+position = Vector2(564, 262)
+
+[node name="Generator3" parent="Infrastructure/Generators" instance=ExtResource("8_jxt2h")]
+position = Vector2(253, 571)
+
 [node name="SceneArea1" type="Area2D" parent="."]
 position = Vector2(105, 327)
 collision_layer = 0
@@ -268,24 +274,31 @@ collision_mask = 2
 shape = SubResource("RectangleShape2D_ta506")
 debug_color = Color(0.682353, 0.298039, 1, 0.129412)
 
-[node name="Fog" type="ColorRect" parent="."]
-visible = false
+[node name="Fogs" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Fog" type="ColorRect" parent="Fogs"]
 z_index = 999
 material = SubResource("ShaderMaterial_8ctq7")
+layout_mode = 0
 offset_left = -20.0
 offset_top = -21.0
 offset_right = 1191.0
 offset_bottom = 680.0
 color = Color(0.82606, 0.82606, 0.82606, 1)
 
-[node name="Fog2" type="ColorRect" parent="."]
+[node name="Fog2" type="ColorRect" parent="Fogs"]
 z_index = 999
 material = SubResource("ShaderMaterial_kjwur")
+layout_mode = 0
 offset_left = -70.0
 offset_top = -55.0
 offset_right = 1141.0
 offset_bottom = 646.0
-color = Color(0.82606, 0.82606, 0.82606, 1)
+color = Color(0.827451, 0.827451, 0.827451, 1)
 
 [connection signal="area_entered" from="SceneArea1" to="." method="_on_scene_1_area_area_entered"]
 [connection signal="area_entered" from="SceneArea2" to="." method="_on_scene_area_2_area_entered"]

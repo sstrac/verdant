@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dfy7t0y7xpovt"
-path="res://.godot/imported/dialogue_character.png-870325c9f6f2b5516ecd501f972c8bd3.ctex"
+uid="uid://jdoyligynav3"
+path="res://.godot/imported/progress_bar_over.png-3c230d3ae84ab494e0d9fb2fe4e669d2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/dialogue_character.png"
-dest_files=["res://.godot/imported/dialogue_character.png-870325c9f6f2b5516ecd501f972c8bd3.ctex"]
+source_file="res://assets/textures/ui/progress_bar_over.png"
+dest_files=["res://.godot/imported/progress_bar_over.png-3c230d3ae84ab494e0d9fb2fe4e669d2.ctex"]
 
 [params]
 

@@ -208,7 +208,6 @@ offset_left = -9.0
 offset_top = -101.0
 offset_right = 20.0
 offset_bottom = -13.0
-color = Color(0.823529, 0.27451, 1, 1)
 
 [node name="ColorRect2" type="ColorRect" parent="Smoke"]
 material = SubResource("ShaderMaterial_5sh2u")
@@ -217,7 +216,7 @@ offset_left = -6.0
 offset_top = -82.0
 offset_right = 21.0
 offset_bottom = -13.0
-color = Color(0.301961, 0.431373, 0.827451, 1)
+color = Color(0.512507, 0.235438, 1, 1)
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("5_cd83j")

@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://eqyhkfrap4yc"]
 
 [ext_resource type="Script" path="res://dialogue/dialogue_box.gd" id="1_ndget"]
-[ext_resource type="Texture2D" uid="uid://dfy7t0y7xpovt" path="res://assets/textures/dialogue_character.png" id="2_jah1w"]
-[ext_resource type="Texture2D" uid="uid://ckf1l8xq0kugc" path="res://assets/textures/dialogue_companion.png" id="3_dv17h"]
+[ext_resource type="Texture2D" uid="uid://dfy7t0y7xpovt" path="res://assets/textures/dialogue/dialogue_character.png" id="2_jah1w"]
+[ext_resource type="Texture2D" uid="uid://ckf1l8xq0kugc" path="res://assets/textures/dialogue/dialogue_companion.png" id="3_dv17h"]
 [ext_resource type="FontFile" uid="uid://dihvo2v27tls1" path="res://assets/Chewy-Regular.ttf" id="4_84d7e"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_timoc"]
