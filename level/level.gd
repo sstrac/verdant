@@ -82,12 +82,18 @@ func _revive_tile():
 
 func _input(event: InputEvent):
 	if event.is_action_pressed("execute"):
-		#_revive_tile()
-		player.current_ability.perform(player)
+		var performed = player.current_ability.perform(player)
+		if not performed:
+			_perform_on_tile(player.current_ability)
 	elif event.is_action_pressed("tab"):
 		player.switch_abilities()
 		ui.change_ability(player.current_ability)
 
+
+func _perform_on_tile(ability):
+	if ability == Abilities.WATERING:
+		_revive_tile()
+	
 
 func _set_z_index_for_surface_layer():
 	var surface_cell: Vector2i = surface_layer.local_to_map(player.position)

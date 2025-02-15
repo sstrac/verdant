@@ -15,8 +15,7 @@ var closest_interactable: Interactable
 
 
 func _ready():
-	available_abilities.append(Hand.new())
-	available_abilities.append(Hammer.new())
+	available_abilities.append(Abilities.HAND)
 	current_ability = available_abilities[0]
 
 
