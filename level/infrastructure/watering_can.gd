@@ -15,3 +15,4 @@ func interact(player):
 
 func unbury():
 	sprite.texture = UNEARTHED_TEXTURE
+	buried = false

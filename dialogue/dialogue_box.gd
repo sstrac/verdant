@@ -24,29 +24,28 @@ func _ready():
 
 
 func _show_dialogue():
-	var characters = characters
-	var split_line = manuscript[tracker].split(":")
-	if split_line[0].to_lower() == "right":
-		right_sprite.texture = characters["right"]
-		right_sprite.show()
-		left_sprite.hide()
-	elif split_line[0].to_lower() == 'left':
-		left_sprite.texture = characters["left"]
-		left_sprite.show()
-		right_sprite.hide()
-	text.text = split_line[1]
-	
+	if not finished:
+		var characters = characters
+		var split_line = manuscript[tracker].split(":")
+		if split_line[0].to_lower() == "right":
+			right_sprite.texture = characters["right"]
+			right_sprite.show()
+			left_sprite.hide()
+		elif split_line[0].to_lower() == 'left':
+			left_sprite.texture = characters["left"]
+			left_sprite.show()
+			right_sprite.hide()
+		text.text = split_line[1]
+		
+		if tracker + 1 == manuscript.size():
+			finished = true
+		else:
+			tracker += 1
+	else:
+		complete.emit(scene)
+		queue_free()
 
 
 func _input(event: InputEvent):
 	if event.is_action_pressed("progress"):
-		if not finished:
-			tracker += 1
-			_show_dialogue()
-			
-			if tracker + 1 == manuscript.size():
-				finished = true
-		else:
-			complete.emit(scene)
-			queue_free()
-		
+		_show_dialogue()

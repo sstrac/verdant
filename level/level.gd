@@ -3,7 +3,7 @@ extends Node2D
 const LERP_SPEED = 10
 const VECTOR_16 = Vector2i(16, 16)
 const DIALOGUE_BOX = preload("res://dialogue/dialogue_box.tscn")
-
+const PIG_FOLLOW_FIRST_CHECKPOINT = 735
 
 @onready var player = get_node("Player")
 @onready var camera: Camera2D = get_node("Camera2D")
@@ -15,6 +15,7 @@ const DIALOGUE_BOX = preload("res://dialogue/dialogue_box.tscn")
 @onready var ui_canvas_layer = get_node("CanvasLayer")
 @onready var ui = get_node("CanvasLayer/UI")
 
+@onready var watering_can = get_node("%WateringCan")
 @onready var powerlines = get_node("Infrastructure/PowerLineGroup")
 @onready var generators = get_node("Infrastructure/Generators")
 @onready var drawings = get_node("Drawings")
@@ -22,11 +23,12 @@ const DIALOGUE_BOX = preload("res://dialogue/dialogue_box.tscn")
 @onready var electrical_hum_audio = get_node("Infrastructure/ElectricalHumAudio")
 @onready var fogs = get_node("Fogs")
 
-var next_scene = null#TODO Scenes.SCENE_1
+var next_scene = Scenes.SCENE_1
 
 var powerlines_quest_complete = false
 var generators_quest_complete = false
 var watering_holes_quest_complete = false
+
 var pig_path_follow_distance = 0
 
 
@@ -35,12 +37,21 @@ func _ready():
 	player.health_changed.connect(_on_health_changed)
 	player.died.connect(_on_death)
 	player.procrastination.connect(_on_procrastination)
+
+	for animal in animals:
+		animal.dug.connect(_on_animal_dug)
 	
 	for powerline in powerlines.get_children():
 		powerline.has_broken.connect(_on_powerline_broken)
 	
 	for generator in generators.get_children():
 		generator.has_broken.connect(_on_generator_broken)
+
+
+func _on_animal_dug():
+	if animals.all(func(a): return a.finished_digging):
+		watering_can.unbury()
+		player.start_physics_input()
 
 
 func _on_health_changed():
@@ -58,10 +69,9 @@ func _on_powerline_broken():
 
 func _on_generator_broken():
 	print(fogs.modulate.a)
-	fogs.modulate.a -= 0.4
+	fogs.modulate.a -= 0.36
 	if generators.get_children().all(func(p): return p.broken):
 		generators_quest_complete = true
-		
 	
 
 func _on_procrastination():
@@ -89,7 +99,7 @@ func _check_all_powerlines_broken():
 	if powerlines.get_children().all(func(p): return p.broken):
 		powerlines_quest_complete = true
 		electrical_hum_audio.stop()
-		pig_path_follow_distance = 735
+		pig_path_follow_distance = PIG_FOLLOW_FIRST_CHECKPOINT
 
 
 func _perform_revive_tile():
@@ -153,9 +163,9 @@ func _make_pigs_fly():
 		animal.evolve()
 	
 	
-func _play_cutscene():
+func _play_cutscene(scene = next_scene):
 	var dialogue_box = DIALOGUE_BOX.instantiate()
-	dialogue_box.scene = next_scene
+	dialogue_box.scene = scene
 	ui_canvas_layer.add_child(dialogue_box)
 	dialogue_box.complete.connect(_on_dialogue_finished)
 	player.stop_physics_input()
@@ -177,3 +187,13 @@ func _on_scene_1_area_area_entered(area: Area2D) -> void:
 func _on_scene_area_2_area_entered(area: Area2D) -> void:
 	if next_scene == Scenes.SCENE_2:
 		_play_cutscene()
+	elif generators_quest_complete:
+		player.stop_physics_input()
+		for animal in animals:
+			animal.dig(watering_can.global_position)
+			await get_tree().create_timer(0.2).timeout
+
+
+func _on_scene_area_3_area_entered(area: Area2D) -> void:
+	if pig_path_follow.progress > PIG_FOLLOW_FIRST_CHECKPOINT - 2:
+		_play_cutscene(Scenes.SCENE_3)

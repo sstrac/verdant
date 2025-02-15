@@ -10,19 +10,21 @@ size = Vector2(14.5, 12)
 radius = 13.0
 
 [node name="WateringCan" type="StaticBody2D"]
+collision_layer = 2
 script = ExtResource("1_4ojnq")
 requires_hand = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-8, -8)
 texture = ExtResource("2_q3p5d")
 centered = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(8.75, 9)
+position = Vector2(0.75, 1)
 shape = SubResource("RectangleShape2D_cav40")
 
 [node name="Area2D" type="Area2D" parent="."]
-position = Vector2(9, 10)
+position = Vector2(1, 2)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_32giu")

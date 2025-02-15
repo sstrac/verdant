@@ -34,3 +34,14 @@ const SCENE_2: Dictionary = {
 		"right:They're aren't many of them, I wonder if there are others somewhere",
 	]
 }
+
+const SCENE_3: Dictionary = {
+	'characters': {
+		"right": COMPANION_TEXTURE,
+		"left": CHARACTER_TEXTURE
+	},
+	'script':
+	[
+		"right:It's looking to drink"
+	]
+}
