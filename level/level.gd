@@ -19,7 +19,10 @@ const DIALOGUE_BOX = preload("res://dialogue/dialogue_box.tscn")
 @onready var pig_path_follow = get_node("%TrappedPigPathFollow")
 
 var next_scene = Scenes.SCENE_1
+
 var powerlines_quest_complete = false
+var generators_quest_complete = false
+var watering_holes_quest_complete = false
 
 
 func _ready():
@@ -52,19 +55,32 @@ func _check_powerlines_broken():
 
 func _revive_tile():
 	var direction: Vector2i = player.last_velocity.sign()
-	var map_cell = ground_layer.local_to_map(player.position) + direction
-	var atlas_cell = ground_layer.get_cell_atlas_coords(map_cell)
-	var cell_data = ground_layer.get_cell_tile_data(map_cell)
-	var dead
+	var map_cell = surface_layer.local_to_map(player.position) + direction
+	var atlas_cell = surface_layer.get_cell_atlas_coords(map_cell)
+	var alt_id = surface_layer.get_cell_alternative_tile(map_cell)
+	var cell_data = surface_layer.get_cell_tile_data(map_cell)
+
+	var revived_atlas_cell
+	
 	if cell_data:
-		dead = cell_data.get_custom_data('dead')
+		revived_atlas_cell = cell_data.get_custom_data('revived_tile')
 	
 	if atlas_cell != -Vector2i.ONE:
-		ground_layer.set_cell(map_cell, TileCoords.LUMINO_SOURCE, atlas_cell + Vector2i.RIGHT)
+		var cell_water_id = cell_data.get_custom_data('water_body')
+		
+		if cell_water_id != 0:
+			for a_cell in surface_layer.get_used_cells():
+				var a_cell_water_id = surface_layer.get_cell_tile_data(a_cell).get_custom_data('water_body')
+				
+				if a_cell_water_id == cell_water_id:
+					surface_layer.set_cell(a_cell, TileCoords.LUMINO_SOURCE, revived_atlas_cell, alt_id)
+		
+		surface_layer.set_cell(map_cell, TileCoords.LUMINO_SOURCE, revived_atlas_cell, alt_id)
 
 
 func _input(event: InputEvent):
 	if event.is_action_pressed("execute"):
+		_revive_tile()
 		player.current_ability.perform(player)
 	elif event.is_action_pressed("tab"):
 		player.switch_abilities()
