@@ -37,7 +37,7 @@ signal procrastination
 
 
 func _ready():
-	available_abilities.append(Abilities.WATERING)
+	available_abilities.append(Abilities.HAND)
 	current_ability = available_abilities[0]
 
 
