@@ -210,7 +210,10 @@ loop = false
 position = Vector2(815, 536)
 
 [node name="Generator2" parent="Infrastructure" instance=ExtResource("8_jxt2h")]
-position = Vector2(573, 263)
+position = Vector2(564, 262)
+
+[node name="Generator3" parent="Infrastructure" instance=ExtResource("8_jxt2h")]
+position = Vector2(253, 571)
 
 [node name="WateringCan" parent="Infrastructure" instance=ExtResource("9_ulln3")]
 position = Vector2(998, 304)
@@ -223,7 +226,7 @@ position = Vector2(167, 66)
 stream = ExtResource("13_7o7fs")
 volume_db = -3.496
 autoplay = true
-max_distance = 200.0
+max_distance = 300.0
 
 [node name="PowerLineGroup" type="Node2D" parent="Infrastructure"]
 position = Vector2(167, 66)

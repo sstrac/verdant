@@ -19,7 +19,7 @@ const DIALOGUE_BOX = preload("res://dialogue/dialogue_box.tscn")
 @onready var pig_path_follow = get_node("%TrappedPigPathFollow")
 @onready var electrical_hum_audio = get_node("Infrastructure/ElectricalHumAudio")
 
-var next_scene = Scenes.SCENE_1
+var next_scene = null#TODO Scenes.SCENE_1
 
 var powerlines_quest_complete = false
 var generators_quest_complete = false
@@ -28,10 +28,15 @@ var watering_holes_quest_complete = false
 
 func _ready():
 	_draw_electricity()
+	player.health_changed.connect(_on_health_changed)
 	for powerline in powerlines.get_children():
 		powerline.has_broken.connect(_draw_electricity)
 
 
+func _on_health_changed():
+	ui.set_health(player.health)
+	
+	
 func _draw_electricity():
 	drawings.powerlines = powerlines.get_children() \
 		.filter(func(p): return !p.broken) \
@@ -55,7 +60,7 @@ func _check_powerlines_broken():
 			pig_path_follow.progress += 0.5
 
 
-func _revive_tile():
+func _perform_revive_tile():
 	var direction: Vector2i = player.last_velocity.sign()
 	var map_cell = surface_layer.local_to_map(player.position) + direction
 	var atlas_cell = surface_layer.get_cell_atlas_coords(map_cell)
@@ -68,16 +73,23 @@ func _revive_tile():
 		revived_atlas_cell = cell_data.get_custom_data('revived_tile')
 	
 	if atlas_cell != -Vector2i.ONE:
-		var cell_water_id = cell_data.get_custom_data('water_body')
+		var water_body = cell_data.get_custom_data('water_body')
 		
-		if cell_water_id != 0:
-			for a_cell in surface_layer.get_used_cells():
-				var a_cell_water_id = surface_layer.get_cell_tile_data(a_cell).get_custom_data('water_body')
-				
-				if a_cell_water_id == cell_water_id:
-					surface_layer.set_cell(a_cell, TileCoords.LUMINO_SOURCE, revived_atlas_cell, alt_id)
+		if water_body != 0:
+			_revive_water_body(water_body, map_cell, revived_atlas_cell, alt_id)
+
+
+func _revive_water_body(water_body, map_cell, revived_atlas_cell, alt_id):
+	# Revive the clicked cell
+	player.audio_stream_player.stream = Sounds.WATER_SOUND
+	player.audio_stream_player.play()
+	# For all used cells in tilemap
+	for a_cell in surface_layer.get_used_cells():
+		var a_cell_water_body = surface_layer.get_cell_tile_data(a_cell).get_custom_data('water_body')
 		
-		surface_layer.set_cell(map_cell, TileCoords.LUMINO_SOURCE, revived_atlas_cell, alt_id)
+		# Revive cell if the cell is a body of water matching the clicked tile
+		if a_cell_water_body == water_body:
+			surface_layer.set_cell(a_cell, TileCoords.LUMINO_SOURCE, revived_atlas_cell, alt_id)
 
 
 func _input(event: InputEvent):
@@ -92,7 +104,7 @@ func _input(event: InputEvent):
 
 func _perform_on_tile(ability):
 	if ability == Abilities.WATERING:
-		_revive_tile()
+		_perform_revive_tile()
 	
 
 func _set_z_index_for_surface_layer():

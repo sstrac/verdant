@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://cjkbu32ldwjyk"]
 
 [ext_resource type="Script" path="res://level/infrastructure/watering_can.gd" id="1_4ojnq"]
-[ext_resource type="Texture2D" uid="uid://bvpcodas17pbb" path="res://assets/textures/infrastructure/watering_can_mini.png" id="1_6qfcs"]
+[ext_resource type="Texture2D" uid="uid://b78ps4m734w4y" path="res://assets/textures/infrastructure/buried_watering_can.png" id="2_q3p5d"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cav40"]
 size = Vector2(14.5, 12)
@@ -14,7 +14,7 @@ script = ExtResource("1_4ojnq")
 requires_hand = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_6qfcs")
+texture = ExtResource("2_q3p5d")
 centered = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

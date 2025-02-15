@@ -12,10 +12,16 @@ var last_velocity = Vector2.DOWN
 var available_abilities = []
 var current_ability: Ability
 var closest_interactable: Interactable
+var health = 10:
+	set(h):
+		health = h
+		health_changed.emit()
+
+signal health_changed
 
 
 func _ready():
-	available_abilities.append(Abilities.HAND)
+	available_abilities.append(Abilities.WATERING)
 	current_ability = available_abilities[0]
 
 
