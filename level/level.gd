@@ -104,34 +104,35 @@ func _check_all_powerlines_broken():
 
 func _perform_revive_tile():
 	var direction: Vector2i = player.last_velocity.sign()
-	var map_cell = surface_layer.local_to_map(player.position) + direction
-	var atlas_cell = surface_layer.get_cell_atlas_coords(map_cell)
-	var alt_id = surface_layer.get_cell_alternative_tile(map_cell)
-	var cell_data = surface_layer.get_cell_tile_data(map_cell)
-
-	var revived_atlas_cell
-	
-	if cell_data:
-		revived_atlas_cell = cell_data.get_custom_data('revived_tile')
+	var map_cell = ground_layer.local_to_map(player.position) + direction
+	var atlas_cell = ground_layer.get_cell_atlas_coords(map_cell)
+	var cell_data = ground_layer.get_cell_tile_data(map_cell)
 	
 	if atlas_cell != -Vector2i.ONE:
-		var water_body = cell_data.get_custom_data('water_body')
+		var is_water_body = cell_data.get_custom_data('water_body')
 		
-		if water_body != 0:
-			_revive_water_body(water_body, map_cell, revived_atlas_cell, alt_id)
+		if is_water_body:
+			_revive_water_body(map_cell)
 
 
-func _revive_water_body(water_body, map_cell, revived_atlas_cell, alt_id):
-	# Revive the clicked cell
+func _revive_water_body(map_cell):
 	player.audio_stream_player.stream = Sounds.WATER_SOUND
 	player.audio_stream_player.play()
 	# For all used cells in tilemap
-	for a_cell in surface_layer.get_used_cells():
-		var a_cell_water_body = surface_layer.get_cell_tile_data(a_cell).get_custom_data('water_body')
-		
-		# Revive cell if the cell is a body of water matching the clicked tile
-		if a_cell_water_body == water_body:
-			surface_layer.set_cell(a_cell, TileCoords.LUMINO_SOURCE, revived_atlas_cell, alt_id)
+	var surrounding_cells = ground_layer.get_surrounding_cells(map_cell)
+	var surrounding_water_cells = []
+	
+	for cell in surrounding_cells:
+		if ground_layer.get_cell_tile_data(cell).get_custom_data('water_body'):
+			if not surrounding_water_cells.has(cell):
+				surrounding_water_cells.append(cell)
+				surrounding_cells.append_array(ground_layer.get_surrounding_cells(cell))
+	
+	for water_cell in surrounding_water_cells:
+		var alt_id = ground_layer.get_cell_alternative_tile(water_cell)
+		var revived_atlas_cell = ground_layer.get_cell_tile_data(water_cell).get_custom_data('revived_tile')
+			
+		ground_layer.set_cell(water_cell, TileCoords.LUMINO_SOURCE, revived_atlas_cell, alt_id)
 
 
 func _input(event: InputEvent):
