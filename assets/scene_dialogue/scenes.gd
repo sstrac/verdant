@@ -67,9 +67,9 @@ const SCENE_LONELY_PIGS: Dictionary = {
 	'script':
 	[
 		"right:The vital signs of these pigs seem to be improving.",
-		"left:Something still seems off about them.. maybe they're lonely?",
+		"left:Something still seems off about them... maybe they're lonely?",
 		"right:Earth pigs have been known to seek out the company of other pigs and often huddle to maintain physical contact.",
-		"left:Maybe we can find others somewhere, reunite the family."
+		"left:Maybe we can find others somewhere, reunite the family... hold on they seem to be up to something.",
 	]
 }
 

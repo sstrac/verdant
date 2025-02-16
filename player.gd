@@ -31,7 +31,7 @@ var pig_pet_count = 0:
 			
 
 var procrastinated: bool = false
-
+var time = 0
 signal health_changed
 signal died
 signal procrastination
@@ -57,7 +57,8 @@ func _physics_process(delta: float) -> void:
 		if global_position.x >= 400:
 			velocity = Vector2.DOWN * CUTSCENE_SPEED
 		else:
-			velocity = Vector2.RIGHT * CUTSCENE_SPEED
+			time += delta
+			velocity = (Vector2.RIGHT * CUTSCENE_SPEED) + (Vector2.UP * cos(time) * 10)
 		
 		if global_position.y >= 320:
 			velocity = Vector2.ZERO

@@ -26,6 +26,8 @@ const PIG_FOLLOW_SECOND_CHECKPOINT = 1044
 @onready var pig_path_follow = get_node("%TrappedPigPathFollow")
 @onready var electrical_hum_audio = get_node("Infrastructure/ElectricalHumAudio")
 @onready var fogs = get_node("Fogs")
+@onready var fade_rect = get_node("FadeRect")
+@onready var fadeout_timer = get_node("FadeoutTimer")
 @onready var audio_stream_player = get_node("AudioStreamPlayer")
 
 
@@ -36,15 +38,16 @@ var generators_quest_complete = false
 var watering_holes_quest_complete = false
 var trapped_pig_watering_hole_quest_complete = false
 var revive_world = false
-var world_revived = false
+var fadeout = false
+var revival_cutscene = false
 
 var pig_path_follow_distance = 0
-
+var dug = false
 
 func _ready():
 	#TBD
 	#audio_stream_player.finished.connect(_on_intro_music_finished)
-
+	fadeout_timer.timeout.connect(_on_fadeout_ended)
 	player.disable_collision()
 	ship.disable_collision()
 	_redraw_electricity()
@@ -52,6 +55,8 @@ func _ready():
 	player.died.connect(_on_death)
 	player.procrastination.connect(_on_procrastination)
 	player.first_item_acquired.connect(_on_first_item_acquired)
+	
+	ship.entered_after_revival.connect(_entered_ship_after_revival)
 	
 	for tree in trees:
 		tree.revived.connect(_on_object_revival)
@@ -69,6 +74,42 @@ func _ready():
 	#TEST
 	_on_intro_music_finished()
 
+
+func _physics_process(delta: float) -> void:
+	if not revival_cutscene:
+		if player.intro_cutscene and player.global_position.x < 400:
+			camera.global_position.x = lerp(camera.global_position.x, player.global_position.x, delta * LERP_SPEED)
+		else:
+			camera.global_position = lerp(camera.global_position, player.global_position, delta * LERP_SPEED)
+	else:
+		camera.global_position = lerp(camera.global_position, camera.global_position + Vector2(1, 0), delta * LERP_SPEED * 2)
+		
+		if camera.global_position.x >= player.global_position.x:
+			revival_cutscene = false
+			_play_cutscene(Scenes.SCENE_PIG_EVOLUTION_FOLLOWUP)
+
+
+func _process(delta):
+	_set_z_index_for_surface_layer()
+	
+	if pig_path_follow.progress < pig_path_follow_distance:
+		pig_path_follow.progress += 1.2
+	
+	if fadeout and not fade_rect.color.a >= 1:
+		fade_rect.color.a += 0.1
+	elif not fadeout and not fade_rect.color.a <= 0:
+		fade_rect.color.a -= 0.1
+
+
+func _on_fadeout_ended():
+	fadeout_timer.stop()
+	if World.revived:
+		fadeout = false
+		_revive_world_tiles()
+		revival_cutscene = true
+		player.stop_physics_input()
+		camera.global_position = Vector2(400, player.global_position.y)
+		
 
 func _on_intro_music_finished():
 	_play_cutscene()
@@ -129,6 +170,11 @@ func _on_procrastination():
 func _on_first_item_acquired():
 	_play_cutscene(Scenes.SCENE_NEW_ITEM)
 
+
+func _entered_ship_after_revival():
+	player.last_velocity = Vector2.DOWN
+	player.stop_physics_input()
+	
 	
 func _redraw_electricity():
 	drawings.working_powerlines = powerlines.get_children() \
@@ -136,15 +182,14 @@ func _redraw_electricity():
 		.map(func(p): return p.connector.global_position)
 
 
-func _physics_process(delta: float) -> void:
-	camera.global_position = lerp(camera.global_position, player.global_position, delta * LERP_SPEED)
-
-
-func _process(delta):
-	_set_z_index_for_surface_layer()
-	
-	if pig_path_follow.progress < pig_path_follow_distance:
-		pig_path_follow.progress += 1.2
+func _revive_world_tiles():
+	for cell in ground_layer.get_used_cells():
+		var alt_id = ground_layer.get_cell_alternative_tile(cell)
+		var tile_data = ground_layer.get_cell_tile_data(cell)
+		
+		if tile_data:
+			var revived_atlas_cell = tile_data.get_custom_data('revived_tile')
+			ground_layer.set_cell(cell, TileCoords.LUMINO_SOURCE, revived_atlas_cell, alt_id)
 
 
 func _check_all_powerlines_broken():
@@ -244,28 +289,40 @@ func _on_dialogue_finished(scene):
 	match scene:
 		Scenes.SCENE_1: next_scene = Scenes.SCENE_2
 		Scenes.SCENE_2: next_scene = null
+		Scenes.SCENE_LONELY_PIGS: _make_pigs_dig()
+		Scenes.SCENE_PIG_EVOLUTION:
+			_make_pigs_fly()
+			fadeout = true
+			fadeout_timer.start()
+			World.revived = true
+			player.stop_physics_input()
+		Scenes.SCENE_PIG_EVOLUTION_FOLLOWUP:
+			player.start_physics_input()
+
+
+func _make_pigs_dig():
+	player.stop_physics_input()
+	for animal in animals:
+		animal.dig(watering_can.global_position)
+		await get_tree().create_timer(0.2).timeout
 
 
 func _on_scene_area_2_area_entered(area: Area2D) -> void:
 	if next_scene == Scenes.SCENE_2:
 		_play_cutscene()
 	
-	if generators_quest_complete and not player.available_abilities.has(Abilities.WATERING):
-		player.stop_physics_input()
-		for animal in animals:
-			animal.dig(watering_can.global_position)
-			await get_tree().create_timer(0.2).timeout
-	
-	if pig_path_follow.progress > PIG_FOLLOW_SECOND_CHECKPOINT - 2:
+	if generators_quest_complete and not player.available_abilities.has(Abilities.WATERING) and not dug:
+		dug = true
+		_play_cutscene(Scenes.SCENE_LONELY_PIGS)
+
+	if pig_path_follow.progress > PIG_FOLLOW_SECOND_CHECKPOINT - 2 and not powerlines_quest_complete:
 		powerlines_quest_complete = true
+		_play_cutscene(Scenes.SCENE_UGLY_PLANET)
 		
-	if revive_world and not world_revived:
-		world_revived = true
-		for cell in ground_layer.get_used_cells():
-			var alt_id = ground_layer.get_cell_alternative_tile(cell)
-			var revived_atlas_cell = ground_layer.get_cell_tile_data(cell).get_custom_data('revived_tile')
-			ground_layer.set_cell(cell, TileCoords.LUMINO_SOURCE, revived_atlas_cell, alt_id)
-		
+
+	if revive_world and not World.revived:
+		_play_cutscene(Scenes.SCENE_PIG_EVOLUTION)
+
 
 func _on_scene_area_3_area_entered(area: Area2D) -> void:
 	if pig_path_follow.progress > PIG_FOLLOW_FIRST_CHECKPOINT - 2 and pig_path_follow_distance != PIG_FOLLOW_SECOND_CHECKPOINT:
