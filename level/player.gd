@@ -79,8 +79,30 @@ func stop_physics_input():
 
 func start_physics_input():
 	set_physics_process(true)
+	
+
+func disable_collision():
+	set_collision_layer_value(1, false)
+	set_collision_mask_value(1, false)
+	set_collision_layer_value(2, false)
+	set_collision_mask_value(2, false)
+	get_node("Area2D").set_collision_layer_value(1, false)
+	get_node("Area2D").set_collision_layer_value(2, false)
+	get_node("Area2D").set_collision_mask_value(1, false)
+	get_node("Area2D").set_collision_mask_value(2, false)
 
 
+func enable_collision():
+	set_collision_layer_value(1, true)
+	set_collision_mask_value(1, true)
+	set_collision_layer_value(2, true)
+	set_collision_mask_value(2, true)
+	get_node("Area2D").set_collision_layer_value(1, true)
+	get_node("Area2D").set_collision_layer_value(2, true)
+	get_node("Area2D").set_collision_mask_value(1, true)
+	get_node("Area2D").set_collision_mask_value(2, true)
+	
+	
 func _on_area_2d_area_entered(area: Area2D) -> void:
 	var direction_to_area = global_position.direction_to(area.global_position)
 

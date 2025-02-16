@@ -6,6 +6,7 @@ const DIALOGUE_BOX = preload("res://dialogue/dialogue_box.tscn")
 const PIG_FOLLOW_FIRST_CHECKPOINT = 735
 
 @onready var player = get_node("Player")
+@onready var ship = get_node("Player/Ship")
 @onready var camera: Camera2D = get_node("Camera2D")
 @onready var animals = get_node("Animals").get_children()
 
@@ -33,6 +34,8 @@ var pig_path_follow_distance = 0
 
 
 func _ready():
+	player.disable_collision()
+	ship.disable_collision()
 	_redraw_electricity()
 	player.health_changed.connect(_on_health_changed)
 	player.died.connect(_on_death)
@@ -155,8 +158,11 @@ func _set_z_index_for_surface_layer():
 
 	if surface_cell in surface_layer.get_used_cells():
 		player.z_index = 0
-	else:
+	elif player.global_position.y > 0:
 		player.z_index = player.global_position.y
+	else:
+		player.z_index = 0
+		
 
 
 func _make_pigs_fly():
