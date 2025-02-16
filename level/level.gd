@@ -23,6 +23,8 @@ const PIG_FOLLOW_FIRST_CHECKPOINT = 735
 @onready var pig_path_follow = get_node("%TrappedPigPathFollow")
 @onready var electrical_hum_audio = get_node("Infrastructure/ElectricalHumAudio")
 @onready var fogs = get_node("Fogs")
+@onready var audio_stream_player = get_node("AudioStreamPlayer")
+
 
 var next_scene = Scenes.SCENE_1
 
@@ -34,6 +36,7 @@ var pig_path_follow_distance = 0
 
 
 func _ready():
+	audio_stream_player.finished.connect(_on_intro_music_finished)
 	player.disable_collision()
 	ship.disable_collision()
 	_redraw_electricity()
@@ -50,6 +53,17 @@ func _ready():
 	for generator in generators.get_children():
 		generator.has_broken.connect(_on_generator_broken)
 
+
+func _on_intro_music_finished():
+	_play_cutscene()
+	player.intro_cutscene = false
+	ui.show()
+	player.enable_collision()
+	ship.enable_collision()
+	ship.reparent(self)
+	camera.limit_left = 0
+	camera.limit_top = 20
+	
 
 func _on_animal_dug():
 	if animals.all(func(a): return a.finished_digging):
@@ -95,8 +109,9 @@ func _process(delta):
 	_set_z_index_for_surface_layer()
 	
 	if pig_path_follow.progress < pig_path_follow_distance:
-		pig_path_follow.progress += 0.7
+		pig_path_follow.progress += 2
 
+	
 
 func _check_all_powerlines_broken():
 	if powerlines.get_children().all(func(p): return p.broken):
@@ -161,8 +176,7 @@ func _set_z_index_for_surface_layer():
 	elif player.global_position.y > 0:
 		player.z_index = player.global_position.y
 	else:
-		player.z_index = 0
-		
+		player.z_index = 1
 
 
 func _make_pigs_fly():
@@ -184,11 +198,6 @@ func _on_dialogue_finished(scene):
 	match scene:
 		Scenes.SCENE_1: next_scene = Scenes.SCENE_2
 		Scenes.SCENE_2: next_scene = null
-
-
-func _on_scene_1_area_area_entered(area: Area2D) -> void:
-	if next_scene == Scenes.SCENE_1:
-		_play_cutscene()
 
 
 func _on_scene_area_2_area_entered(area: Area2D) -> void:

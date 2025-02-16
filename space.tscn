@@ -5,6 +5,57 @@
 [ext_resource type="Texture2D" uid="uid://c4k2ts8ilruwt" path="res://assets/textures/stars1.png" id="2_klfv5"]
 [ext_resource type="Texture2D" uid="uid://napxoyuxuxe1" path="res://assets/textures/stars2.png" id="4_pg6ae"]
 
+[sub_resource type="Animation" id="Animation_khe37"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Control:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Control2:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Control2:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Control:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
 [sub_resource type="Animation" id="Animation_0wstf"]
 resource_name = "sparkle"
 length = 20.0
@@ -58,57 +109,6 @@ tracks/3/keys = {
 "values": [true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false, true]
 }
 
-[sub_resource type="Animation" id="Animation_khe37"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Control:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Control2:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 0)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Control2:visible")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Control:visible")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_w6dlt"]
 _data = {
 "RESET": SubResource("Animation_khe37"),
@@ -119,7 +119,7 @@ _data = {
 script = ExtResource("1_xj40k")
 
 [node name="ColorRect" type="ColorRect" parent="."]
-offset_right = 1152.0
+offset_right = 2310.0
 offset_bottom = 648.0
 color = Color(0, 0, 0, 1)
 
@@ -127,6 +127,8 @@ color = Color(0, 0, 0, 1)
 scroll_scale = Vector2(0.9, 0.9)
 
 [node name="Sprite2D" type="Sprite2D" parent="Parallax2D2"]
+position = Vector2(-127, -256)
+scale = Vector2(2.33073, 1.58488)
 texture = ExtResource("2_klfv5")
 centered = false
 
@@ -172,6 +174,8 @@ rotation = -0.94766
 scroll_scale = Vector2(0.8, 0.8)
 
 [node name="Sprite2D" type="Sprite2D" parent="Parallax2D3"]
+position = Vector2(-101, -188)
+scale = Vector2(2.18837, 1.76852)
 texture = ExtResource("4_pg6ae")
 centered = false
 
@@ -214,11 +218,11 @@ offset_right = -8.00001
 offset_bottom = 562.0
 rotation = -0.94766
 
-[node name="Parallax2D" type="Parallax2D" parent="."]
-
-[node name="Sprite2D" type="Sprite2D" parent="Parallax2D"]
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_right = 2316.0
+offset_bottom = 648.0
 texture = ExtResource("1_bjwt6")
-centered = false
+stretch_mode = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

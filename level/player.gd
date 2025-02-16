@@ -3,11 +3,12 @@ extends CharacterBody2D
 
 const ORTHOGONAL_SPEED = 100
 const DIAGONAL_SPEED = 75
+const CUTSCENE_SPEED = 50
 
 @onready var animation_tree = get_node("AnimationTree")
 @onready var audio_stream_player: AudioStreamPlayer = get_node("AudioStreamPlayer")
 
-
+var intro_cutscene = true
 var last_velocity = Vector2.DOWN
 var available_abilities = []
 var current_ability: Ability
@@ -51,15 +52,24 @@ func switch_abilities():
 
 
 func _physics_process(delta: float) -> void:
-	var direction = Input.get_vector("left", "right", "up", "down")
-	var speed = ORTHOGONAL_SPEED
-	
-	if velocity.x != 0 and velocity.y != 0 : 
-		speed = DIAGONAL_SPEED 
-	velocity = direction.sign() * speed 
-	
-	last_velocity = velocity if velocity else last_velocity
-	_animate()
+	if intro_cutscene:
+		if global_position.x >= 400:
+			velocity = Vector2.DOWN * CUTSCENE_SPEED
+		else:
+			velocity = Vector2.RIGHT * CUTSCENE_SPEED
+		
+		if global_position.y >= 320:
+			velocity = Vector2.ZERO
+	else:
+		var direction = Input.get_vector("left", "right", "up", "down")
+		var speed = ORTHOGONAL_SPEED
+		
+		if velocity.x != 0 and velocity.y != 0 : 
+			speed = DIAGONAL_SPEED 
+		velocity = direction.sign() * speed 
+		
+		last_velocity = velocity if velocity else last_velocity
+		_animate()
 
 	move_and_slide()
 	

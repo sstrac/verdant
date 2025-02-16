@@ -7,6 +7,8 @@ const FLYING_PIG: SpriteFrames = preload("res://assets/spriteframes/flying_pig.t
 @onready var animated_sprite = get_node("AnimatedSprite2D")
 @onready var audio_stream_player = get_node("AudioStreamPlayer2D")
 
+@export var disable_regular_physics: bool = false
+
 var new_position
 var original_position
 var finished_digging = false
@@ -23,7 +25,7 @@ func _ready():
 	
 
 func _process(delta):
-	if new_position:
+	if new_position and not disable_regular_physics:
 		if not global_position.is_equal_approx(new_position):
 			global_position += global_position.direction_to(new_position) * delta * 10
 			

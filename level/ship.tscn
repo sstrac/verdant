@@ -27,10 +27,13 @@ position = Vector2(16, 3)
 shape = SubResource("RectangleShape2D_85jbx")
 
 [node name="FlyingShipOpenLayer2" type="Sprite2D" parent="."]
+z_index = 1
+z_as_relative = false
 position = Vector2(0, 11)
 texture = ExtResource("1_6ljol")
 
 [node name="FlyingShipLayer1" type="Sprite2D" parent="."]
 z_index = 999
+z_as_relative = false
 position = Vector2(0, -1)
 texture = ExtResource("2_t0vmx")
