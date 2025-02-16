@@ -17,7 +17,7 @@ const SCENE_1: Dictionary = {
 	[
 		"left:The scanners said this planet was a verdant paradise... what the hell happened?",
 		"right:The scanners were last updated 12,436 years ago, it seems a civilisation grew and collapsed within that timeframe.",
-		"left:How could they destroy their own planet in only 12,000 years!",
+		"left:How could they destroy this planet in only 12,000 years!",
 		"right:12,436 years. Perhaps we can look around and reverse some of the damages."
 	]
 }
