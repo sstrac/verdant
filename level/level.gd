@@ -51,6 +51,7 @@ func _ready():
 	player.health_changed.connect(_on_health_changed)
 	player.died.connect(_on_death)
 	player.procrastination.connect(_on_procrastination)
+	player.first_item_acquired.connect(_on_first_item_acquired)
 	
 	for tree in trees:
 		tree.revived.connect(_on_object_revival)
@@ -125,6 +126,10 @@ func _on_procrastination():
 	ui.show_achievement(load("res://assets/achievements/procrastination.tres"))
 
 
+func _on_first_item_acquired():
+	_play_cutscene(Scenes.SCENE_NEW_ITEM)
+
+	
 func _redraw_electricity():
 	drawings.working_powerlines = powerlines.get_children() \
 		.filter(func(p): return !p.broken) \

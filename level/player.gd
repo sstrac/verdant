@@ -35,6 +35,7 @@ var procrastinated: bool = false
 signal health_changed
 signal died
 signal procrastination
+signal first_item_acquired
 
 
 func _ready():
@@ -113,6 +114,10 @@ func enable_collision():
 	get_node("Area2D").set_collision_mask_value(2, true)
 	
 	
+func signal_first_item_acquired():
+	first_item_acquired.emit()
+
+
 func _on_area_2d_area_entered(area: Area2D) -> void:
 	var direction_to_area = global_position.direction_to(area.global_position)
 
