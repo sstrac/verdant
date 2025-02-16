@@ -1,15 +1,18 @@
 extends Node2D
 
+
 const LERP_SPEED = 10
 const VECTOR_16 = Vector2i(16, 16)
 const DIALOGUE_BOX = preload("res://dialogue/dialogue_box.tscn")
 const PIG_FOLLOW_FIRST_CHECKPOINT = 735
+const PIG_FOLLOW_SECOND_CHECKPOINT = 1044
+
 
 @onready var player = get_node("Player")
 @onready var ship = get_node("Player/Ship")
 @onready var camera: Camera2D = get_node("Camera2D")
 @onready var animals = get_node("Animals").get_children()
-
+@onready var trees = get_node("Trees").get_children()
 @onready var ground_layer: TileMapLayer = get_node("GroundLayer")
 @onready var surface_layer: TileMapLayer = get_node("SurfaceLayer")
 
@@ -31,19 +34,28 @@ var next_scene = Scenes.SCENE_1
 var powerlines_quest_complete = false
 var generators_quest_complete = false
 var watering_holes_quest_complete = false
+var trapped_pig_watering_hole_quest_complete = false
+var revive_world = false
+var world_revived = false
 
 var pig_path_follow_distance = 0
 
 
 func _ready():
-	audio_stream_player.finished.connect(_on_intro_music_finished)
+	#TBD
+	#audio_stream_player.finished.connect(_on_intro_music_finished)
+
 	player.disable_collision()
 	ship.disable_collision()
 	_redraw_electricity()
 	player.health_changed.connect(_on_health_changed)
 	player.died.connect(_on_death)
 	player.procrastination.connect(_on_procrastination)
-
+	
+	for tree in trees:
+		tree.revived.connect(_on_object_revival)
+		
+		
 	for animal in animals:
 		animal.dug.connect(_on_animal_dug)
 	
@@ -52,6 +64,9 @@ func _ready():
 	
 	for generator in generators.get_children():
 		generator.has_broken.connect(_on_generator_broken)
+		
+	#TEST
+	_on_intro_music_finished()
 
 
 func _on_intro_music_finished():
@@ -65,6 +80,22 @@ func _on_intro_music_finished():
 	camera.limit_top = 20
 	
 
+func _on_object_revival():
+	var all_water_bodies_filled = true
+	
+	for cell in ground_layer.get_used_cells():
+		var atlas_coords = ground_layer.get_cell_atlas_coords(cell)
+		if atlas_coords in TileCoords.EMPTY_WATER_BODY_CELLS:
+			all_water_bodies_filled = false
+			break
+	
+	if all_water_bodies_filled:
+		watering_holes_quest_complete = true
+		
+	if trees.all(func(t): return t.is_revived) and watering_holes_quest_complete and powerlines_quest_complete:
+		revive_world = true
+		
+	
 func _on_animal_dug():
 	if animals.all(func(a): return a.finished_digging):
 		watering_can.unbury()
@@ -85,7 +116,6 @@ func _on_powerline_broken():
 
 
 func _on_generator_broken():
-	print(fogs.modulate.a)
 	fogs.modulate.a -= 0.36
 	if generators.get_children().all(func(p): return p.broken):
 		generators_quest_complete = true
@@ -109,15 +139,17 @@ func _process(delta):
 	_set_z_index_for_surface_layer()
 	
 	if pig_path_follow.progress < pig_path_follow_distance:
-		pig_path_follow.progress += 2
+		pig_path_follow.progress += 1.2
 
-	
 
 func _check_all_powerlines_broken():
 	if powerlines.get_children().all(func(p): return p.broken):
 		powerlines_quest_complete = true
 		electrical_hum_audio.stop()
-		pig_path_follow_distance = PIG_FOLLOW_FIRST_CHECKPOINT
+		if trapped_pig_watering_hole_quest_complete:
+			pig_path_follow_distance = PIG_FOLLOW_SECOND_CHECKPOINT
+		else:
+			pig_path_follow_distance = PIG_FOLLOW_FIRST_CHECKPOINT
 
 
 func _perform_revive_tile():
@@ -148,9 +180,18 @@ func _revive_water_body(map_cell):
 	
 	for water_cell in surrounding_water_cells:
 		var alt_id = ground_layer.get_cell_alternative_tile(water_cell)
-		var revived_atlas_cell = ground_layer.get_cell_tile_data(water_cell).get_custom_data('revived_tile')
+		var revived_atlas_cell = ground_layer.get_cell_tile_data(water_cell).get_custom_data('watered_tile')
 			
 		ground_layer.set_cell(water_cell, TileCoords.LUMINO_SOURCE, revived_atlas_cell, alt_id)
+		
+		if water_cell == TileCoords.TRAPPED_PIG_WATER_TILE:
+			trapped_pig_watering_hole_quest_complete = true
+			
+			if pig_path_follow_distance == PIG_FOLLOW_FIRST_CHECKPOINT:
+				pig_path_follow_distance = PIG_FOLLOW_SECOND_CHECKPOINT
+				
+	
+	_on_object_revival()
 
 
 func _input(event: InputEvent):
@@ -203,13 +244,24 @@ func _on_dialogue_finished(scene):
 func _on_scene_area_2_area_entered(area: Area2D) -> void:
 	if next_scene == Scenes.SCENE_2:
 		_play_cutscene()
-	elif generators_quest_complete:
+	
+	if generators_quest_complete and not player.available_abilities.has(Abilities.WATERING):
 		player.stop_physics_input()
 		for animal in animals:
 			animal.dig(watering_can.global_position)
 			await get_tree().create_timer(0.2).timeout
-
+	
+	if pig_path_follow.progress > PIG_FOLLOW_SECOND_CHECKPOINT - 2:
+		powerlines_quest_complete = true
+		
+	if revive_world and not world_revived:
+		world_revived = true
+		for cell in ground_layer.get_used_cells():
+			var alt_id = ground_layer.get_cell_alternative_tile(cell)
+			var revived_atlas_cell = ground_layer.get_cell_tile_data(cell).get_custom_data('revived_tile')
+			ground_layer.set_cell(cell, TileCoords.LUMINO_SOURCE, revived_atlas_cell, alt_id)
+		
 
 func _on_scene_area_3_area_entered(area: Area2D) -> void:
-	if pig_path_follow.progress > PIG_FOLLOW_FIRST_CHECKPOINT - 2:
+	if pig_path_follow.progress > PIG_FOLLOW_FIRST_CHECKPOINT - 2 and pig_path_follow_distance != PIG_FOLLOW_SECOND_CHECKPOINT:
 		_play_cutscene(Scenes.SCENE_3)

@@ -11,6 +11,10 @@ const TREE_3 = preload("res://assets/textures/fauna_flora/tree_3.png")
 @onready var timer = get_node("Timer")
 @onready var particles = get_node("CPUParticles2D")
 
+var is_revived = false
+
+signal revived
+
 
 func _ready():
 	z_index = position.y
@@ -22,6 +26,8 @@ func interact(_player):
 		rect.texture = TREE_0
 		timer.start()
 		waterable = false
+		is_revived = true
+		revived.emit()
 
 
 func grow():
