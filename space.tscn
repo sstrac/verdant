@@ -1,0 +1,235 @@
+[gd_scene load_steps=8 format=3 uid="uid://bbm8kdlqvj4i0"]
+
+[ext_resource type="Texture2D" uid="uid://dp14i8nfsasce" path="res://assets/textures/space.png" id="1_bjwt6"]
+[ext_resource type="Script" path="res://space.gd" id="1_xj40k"]
+[ext_resource type="Texture2D" uid="uid://c4k2ts8ilruwt" path="res://assets/textures/stars1.png" id="2_klfv5"]
+[ext_resource type="Texture2D" uid="uid://napxoyuxuxe1" path="res://assets/textures/stars2.png" id="4_pg6ae"]
+
+[sub_resource type="Animation" id="Animation_0wstf"]
+resource_name = "sparkle"
+length = 20.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Control:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 19.9),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(1152, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Control2:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 19.9),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1152, 0), Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Control2:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1.9, 2.5, 4.23333, 5, 6.13333, 7.43333, 8.03333, 9.43333, 13.8333, 14.9667, 16.1, 16.8333, 18.1333, 19.9667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [true, false, true, false, true, false, true, false, true, false, true, false, true, false, true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Control:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.8, 2.06667, 3.3, 3.93333, 5.46667, 6.4, 8.3, 8.9, 11.6, 12.9667, 13.9, 15.7, 16.1667, 17.4667, 18.3333, 19.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [true, false, true, false, true, false, true, false, true, false, true, false, true, false, true, false, true]
+}
+
+[sub_resource type="Animation" id="Animation_khe37"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Control:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Control2:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Control2:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Control:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_w6dlt"]
+_data = {
+"RESET": SubResource("Animation_khe37"),
+"sparkle": SubResource("Animation_0wstf")
+}
+
+[node name="Space" type="Node2D"]
+script = ExtResource("1_xj40k")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(193, 355)
+zoom = Vector2(3, 3)
+limit_left = 0
+limit_top = 0
+limit_right = 1152
+limit_bottom = 648
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0, 0, 0, 1)
+
+[node name="Parallax2D2" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.5, 0.5)
+scroll_offset = Vector2(102, 1)
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax2D2"]
+texture = ExtResource("2_klfv5")
+centered = false
+
+[node name="Control" type="Control" parent="."]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 202.0
+offset_bottom = 605.0
+
+[node name="ColorRect" type="ColorRect" parent="Control"]
+layout_mode = 0
+offset_left = 63.0
+offset_top = 10.0
+offset_right = 103.0
+offset_bottom = 50.0
+rotation = -0.321184
+
+[node name="ColorRect2" type="ColorRect" parent="Control"]
+layout_mode = 0
+offset_top = 213.781
+offset_right = 40.0
+offset_bottom = 253.781
+rotation = 0.666015
+
+[node name="ColorRect3" type="ColorRect" parent="Control"]
+layout_mode = 0
+offset_left = 154.0
+offset_top = 385.0
+offset_right = 194.0
+offset_bottom = 425.0
+
+[node name="ColorRect4" type="ColorRect" parent="Control"]
+layout_mode = 0
+offset_left = 48.0
+offset_top = 601.0
+offset_right = 88.0
+offset_bottom = 641.0
+rotation = -0.94766
+
+[node name="Parallax2D3" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.7, 0.7)
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax2D3"]
+texture = ExtResource("4_pg6ae")
+centered = false
+
+[node name="Control2" type="Control" parent="."]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 202.0
+offset_bottom = 605.0
+
+[node name="ColorRect" type="ColorRect" parent="Control2"]
+layout_mode = 0
+offset_left = -10.0
+offset_top = 83.0
+offset_right = 30.0
+offset_bottom = 123.0
+rotation = -0.321184
+
+[node name="ColorRect2" type="ColorRect" parent="Control2"]
+layout_mode = 0
+offset_left = 156.0
+offset_top = 221.0
+offset_right = 196.0
+offset_bottom = 261.0
+rotation = 0.666015
+
+[node name="ColorRect3" type="ColorRect" parent="Control2"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 439.0
+offset_right = 52.0
+offset_bottom = 479.0
+
+[node name="ColorRect4" type="ColorRect" parent="Control2"]
+layout_mode = 0
+offset_left = -48.0
+offset_top = 522.0
+offset_right = -8.00001
+offset_bottom = 562.0
+rotation = -0.94766
+
+[node name="Parallax2D" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.3, 0.3)
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax2D"]
+texture = ExtResource("1_bjwt6")
+centered = false
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_w6dlt")
+}
+autoplay = "sparkle"
