@@ -172,6 +172,7 @@ shader_parameter/noise_texture = SubResource("NoiseTexture2D_6b4if")
 
 [node name="Generator" type="StaticBody2D"]
 script = ExtResource("1_ontyq")
+waterable = true
 destroyable = true
 metadata/_edit_vertical_guides_ = [-51.0]
 metadata/_edit_horizontal_guides_ = [14.0]

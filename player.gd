@@ -9,6 +9,7 @@ const CUTSCENE_SPEED = 50
 @onready var audio_stream_player: AudioStreamPlayer = get_node("AudioStreamPlayer")
 
 var intro_cutscene = true
+var outro_cutscene = false
 var last_velocity = Vector2.DOWN
 var available_abilities = []
 var current_ability: Ability
@@ -62,6 +63,9 @@ func _physics_process(delta: float) -> void:
 		
 		if global_position.y >= 320:
 			velocity = Vector2.ZERO
+	elif outro_cutscene:
+		time += delta
+		velocity = (Vector2.LEFT * CUTSCENE_SPEED) + (Vector2.UP * cos(time) * 10)
 	else:
 		var direction = Input.get_vector("left", "right", "up", "down")
 		var speed = ORTHOGONAL_SPEED

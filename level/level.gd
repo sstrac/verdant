@@ -21,6 +21,7 @@ const PIG_FOLLOW_SECOND_CHECKPOINT = 1044
 
 @onready var watering_can = get_node("%WateringCan")
 @onready var powerlines = get_node("Infrastructure/PowerLineGroup")
+@onready var disconnected_powerlines = get_node("Infrastructure/DisconnectedPowerLineGroup")
 @onready var generators = get_node("Infrastructure/Generators")
 @onready var drawings = get_node("Drawings")
 @onready var pig_path_follow = get_node("%TrappedPigPathFollow")
@@ -61,15 +62,19 @@ func _ready():
 	for tree in trees:
 		tree.revived.connect(_on_object_revival)
 		
-		
 	for animal in animals:
 		animal.dug.connect(_on_animal_dug)
 	
 	for powerline in powerlines.get_children():
 		powerline.has_broken.connect(_on_powerline_broken)
+		powerline.revived.connect(_on_object_revival)
+	
+	for powerline in disconnected_powerlines.get_children():
+		powerline.revived.connect(_on_object_revival)
 	
 	for generator in generators.get_children():
 		generator.has_broken.connect(_on_generator_broken)
+		generator.revived.connect(_on_object_revival)
 		
 	#TEST
 	_on_intro_music_finished()
@@ -77,7 +82,7 @@ func _ready():
 
 func _physics_process(delta: float) -> void:
 	if not revival_cutscene:
-		if player.intro_cutscene and player.global_position.x < 400:
+		if (player.intro_cutscene and player.global_position.x < 400) or player.outro_cutscene:
 			camera.global_position.x = lerp(camera.global_position.x, player.global_position.x, delta * LERP_SPEED)
 		else:
 			camera.global_position = lerp(camera.global_position, player.global_position, delta * LERP_SPEED)
@@ -103,12 +108,19 @@ func _process(delta):
 
 func _on_fadeout_ended():
 	fadeout_timer.stop()
-	if World.revived:
+	
+	if player.outro_cutscene:
+		fadeout = false
+		player.start_physics_input()
+		
+
+	elif World.revived:
 		fadeout = false
 		_revive_world_tiles()
 		revival_cutscene = true
 		player.stop_physics_input()
 		camera.global_position = Vector2(400, player.global_position.y)
+		ui.show()
 		
 
 func _on_intro_music_finished():
@@ -134,7 +146,14 @@ func _on_object_revival():
 	if all_water_bodies_filled:
 		watering_holes_quest_complete = true
 		
-	if trees.all(func(t): return t.is_revived) and watering_holes_quest_complete and powerlines_quest_complete:
+	var is_revived = func(t): return t.is_revived
+	var all_trees_revived = trees.all(is_revived)
+	var all_generators_revived = generators.get_children().all(is_revived)
+	var all_powerlines_revived = powerlines.get_children().all(is_revived)
+	var all_disconnected_powerlines_revived = disconnected_powerlines.get_children().all(is_revived)
+	
+	if all_trees_revived and all_generators_revived and all_powerlines_revived and \
+		all_disconnected_powerlines_revived and watering_holes_quest_complete and powerlines_quest_complete:
 		revive_world = true
 		
 	
@@ -172,8 +191,15 @@ func _on_first_item_acquired():
 
 
 func _entered_ship_after_revival():
-	player.last_velocity = Vector2.DOWN
+	player.last_velocity = Vector2.LEFT
+	player.global_position = Vector2(1160, -400)
+	camera.limit_top = -9999999
+	camera.global_position = player.global_position
 	player.stop_physics_input()
+	fadeout = true
+	fadeout_timer.start()
+	player.outro_cutscene = true
+	ui.hide()
 	
 	
 func _redraw_electricity():
@@ -273,6 +299,8 @@ func _set_z_index_for_surface_layer():
 func _make_pigs_fly():
 	for animal in animals:
 		animal.evolve()
+		
+	get_node("TrappedPig/TrappedPigPathFollow/Animal4").evolve()
 	
 	
 func _play_cutscene(scene = next_scene):
@@ -296,6 +324,7 @@ func _on_dialogue_finished(scene):
 			fadeout_timer.start()
 			World.revived = true
 			player.stop_physics_input()
+			ui.hide()
 		Scenes.SCENE_PIG_EVOLUTION_FOLLOWUP:
 			player.start_physics_input()
 

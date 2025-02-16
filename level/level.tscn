@@ -33,7 +33,7 @@ b = Vector2(1152, 0)
 size = Vector2(168, 121)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ta506"]
-size = Vector2(71.625, 68)
+size = Vector2(30.8125, 29)
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_nja7a"]
 noise_type = 2
@@ -194,7 +194,7 @@ position = Vector2(1104, 591)
 position = Vector2(267, 477)
 
 [node name="Tree16" parent="Trees" instance=ExtResource("6_oaafg")]
-position = Vector2(384, 547)
+position = Vector2(710, 552)
 
 [node name="Tree17" parent="Trees" instance=ExtResource("6_oaafg")]
 position = Vector2(282, 609)
@@ -280,15 +280,14 @@ position = Vector2(57, -15)
 [node name="PowerLine3" parent="Infrastructure/PowerLineGroup" instance=ExtResource("9_ggx7j")]
 position = Vector2(-1, 54)
 
-[node name="BrokenPowerLines" type="Node2D" parent="Infrastructure"]
+[node name="DisconnectedPowerLineGroup" type="Node2D" parent="Infrastructure"]
+position = Vector2(-97, -95)
 
-[node name="PowerLine" parent="Infrastructure/BrokenPowerLines" instance=ExtResource("9_ggx7j")]
+[node name="PowerLine" parent="Infrastructure/DisconnectedPowerLineGroup" instance=ExtResource("9_ggx7j")]
 position = Vector2(748, 528)
-broken = true
 
-[node name="PowerLine2" parent="Infrastructure/BrokenPowerLines" instance=ExtResource("9_ggx7j")]
+[node name="PowerLine2" parent="Infrastructure/DisconnectedPowerLineGroup" instance=ExtResource("9_ggx7j")]
 position = Vector2(707, 568)
-broken = true
 
 [node name="Generators" type="Node2D" parent="Infrastructure"]
 
@@ -312,12 +311,11 @@ shape = SubResource("RectangleShape2D_m2ppl")
 debug_color = Color(0.682353, 0.298039, 1, 0.129412)
 
 [node name="SceneArea3" type="Area2D" parent="."]
-position = Vector2(944, 65)
+position = Vector2(912, 76)
 collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SceneArea3"]
-position = Vector2(2.8125, -3)
 shape = SubResource("RectangleShape2D_ta506")
 debug_color = Color(0.682353, 0.298039, 1, 0.129412)
 

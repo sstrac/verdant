@@ -12,6 +12,7 @@ height = 40.0
 
 [node name="PowerLine" type="StaticBody2D"]
 script = ExtResource("1_p4klm")
+waterable = true
 destroyable = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

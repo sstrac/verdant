@@ -14,5 +14,5 @@ func enable_collision():
 
 func _on_area_2d_area_entered(area: Area2D) -> void:
 	if World.revived:
-		reparent(area.get_parent())
+		call_deferred('reparent', area.get_parent())
 		entered_after_revival.emit()
