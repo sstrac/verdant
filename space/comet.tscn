@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://cpuugn3v1pwai"]
+
+[ext_resource type="Script" path="res://space/comet.gd" id="1_7s6po"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_r2a5d"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 5.0
+direction = Vector3(1, -0.3, 0)
+spread = 0.0
+initial_velocity_max = 49.29
+gravity = Vector3(0, 0, 0)
+color = Color(0.666677, 0.515888, 0.869803, 1)
+hue_variation_min = -2.23517e-08
+hue_variation_max = 0.11
+
+[sub_resource type="Gradient" id="Gradient_ja0si"]
+offsets = PackedFloat32Array(0.396104, 0.493506)
+colors = PackedColorArray(0.858026, 0.382258, 0, 1, 0.141176, 0.572549, 0.854902, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_1g4wo"]
+gradient = SubResource("Gradient_ja0si")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[node name="Comet" type="GPUParticles2D"]
+position = Vector2(2, 0)
+amount = 500
+process_material = SubResource("ParticleProcessMaterial_r2a5d")
+script = ExtResource("1_7s6po")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+show_behind_parent = true
+position = Vector2(1, -8.47033e-22)
+scale = Vector2(0.148438, 0.148438)
+texture = SubResource("GradientTexture2D_1g4wo")

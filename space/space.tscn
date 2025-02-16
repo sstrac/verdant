@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://bbm8kdlqvj4i0"]
 
 [ext_resource type="Texture2D" uid="uid://dp14i8nfsasce" path="res://assets/textures/space.png" id="1_bjwt6"]
-[ext_resource type="Script" path="res://space.gd" id="1_xj40k"]
+[ext_resource type="Script" path="res://space/space.gd" id="1_xj40k"]
 [ext_resource type="Texture2D" uid="uid://c4k2ts8ilruwt" path="res://assets/textures/stars1.png" id="2_klfv5"]
 [ext_resource type="Texture2D" uid="uid://napxoyuxuxe1" path="res://assets/textures/stars2.png" id="4_pg6ae"]
 

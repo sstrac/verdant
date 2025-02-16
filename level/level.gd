@@ -47,7 +47,7 @@ var dug = false
 
 func _ready():
 	#TBD
-	#audio_stream_player.finished.connect(_on_intro_music_finished)
+	audio_stream_player.finished.connect(_on_intro_music_finished)
 	fadeout_timer.timeout.connect(_on_fadeout_ended)
 	player.disable_collision()
 	ship.disable_collision()
@@ -77,7 +77,7 @@ func _ready():
 		generator.revived.connect(_on_object_revival)
 		
 	#TEST
-	_on_intro_music_finished()
+	#_on_intro_music_finished()
 
 
 func _physics_process(delta: float) -> void:

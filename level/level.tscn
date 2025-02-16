@@ -1,11 +1,12 @@
-[gd_scene load_steps=34 format=4 uid="uid://ecdlgh485rbl"]
+[gd_scene load_steps=37 format=4 uid="uid://ecdlgh485rbl"]
 
 [ext_resource type="Script" path="res://level/level.gd" id="1_n2urj"]
 [ext_resource type="TileSet" uid="uid://gapk0nxp88nx" path="res://assets/level_tileset.tres" id="2_rjj6t"]
 [ext_resource type="PackedScene" uid="uid://cmrnqmwon6ybf" path="res://player.tscn" id="3_cru1r"]
 [ext_resource type="Script" path="res://level/drawings.gd" id="3_d32c2"]
 [ext_resource type="PackedScene" uid="uid://dleajr8g6u06r" path="res://level/fauna_flora/animal.tscn" id="3_g8raj"]
-[ext_resource type="PackedScene" uid="uid://dnqqiry5lw15g" path="res://ship.tscn" id="4_c1dia"]
+[ext_resource type="PackedScene" uid="uid://cpuugn3v1pwai" path="res://space/comet.tscn" id="4_60wo6"]
+[ext_resource type="PackedScene" uid="uid://dnqqiry5lw15g" path="res://space/ship.tscn" id="4_c1dia"]
 [ext_resource type="Shader" path="res://assets/shaders/fog.gdshader" id="5_r83v5"]
 [ext_resource type="PackedScene" uid="uid://bc0f5b42jpt6b" path="res://level/fauna_flora/tree.tscn" id="6_oaafg"]
 [ext_resource type="Shader" path="res://assets/shaders/fog2.gdshader" id="7_cnaak"]
@@ -17,8 +18,32 @@
 [ext_resource type="PackedScene" uid="uid://d16tblhjm8dig" path="res://level/infrastructure/hammer.tscn" id="12_vxclb"]
 [ext_resource type="AudioStream" uid="uid://cu0fy5sn4r11g" path="res://assets/sfx/jameswrowles__hum1.wav" id="13_7o7fs"]
 [ext_resource type="Shader" uid="uid://b2y2wx1t0otcw" path="res://assets/shaders/thick_fog.tres" id="16_7ko8q"]
-[ext_resource type="PackedScene" uid="uid://bbm8kdlqvj4i0" path="res://space.tscn" id="17_36ykt"]
+[ext_resource type="PackedScene" uid="uid://bbm8kdlqvj4i0" path="res://space/space.tscn" id="17_36ykt"]
 [ext_resource type="AudioStream" uid="uid://cdgw80ht00pfa" path="res://assets/music/sad_intro.wav" id="19_4gexu"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_xpmh3"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 4.0
+direction = Vector3(1, -0.3, 0)
+spread = 0.0
+initial_velocity_max = 84.5
+gravity = Vector3(0, 0, 0)
+color = Color(0.279854, 0.556525, 0.40037, 1)
+hue_variation_min = -2.23517e-08
+hue_variation_max = 0.11
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_gnq0s"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 5.0
+direction = Vector3(1, 0.4, 0)
+spread = 0.0
+initial_velocity_max = 49.29
+gravity = Vector3(0, 0, 0)
+color = Color(0.0706303, 0.539202, 0.681616, 1)
+hue_variation_min = -2.23517e-08
+hue_variation_max = 0.11
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_ec75a"]
 b = Vector2(0, 700)
@@ -98,6 +123,24 @@ metadata/_edit_horizontal_guides_ = [320.0, 320.0]
 [node name="Space" parent="." instance=ExtResource("17_36ykt")]
 position = Vector2(-1152, -725)
 
+[node name="SpacePigs" type="Node2D" parent="."]
+modulate = Color(1, 1, 1, 0.501961)
+position = Vector2(0, -1)
+
+[node name="Animal" parent="SpacePigs" instance=ExtResource("3_g8raj")]
+position = Vector2(1173, -593)
+
+[node name="Comet" parent="SpacePigs" instance=ExtResource("4_60wo6")]
+position = Vector2(-308, -566)
+
+[node name="Comet2" parent="SpacePigs" instance=ExtResource("4_60wo6")]
+position = Vector2(-282, -554)
+process_material = SubResource("ParticleProcessMaterial_xpmh3")
+
+[node name="Comet3" parent="SpacePigs" instance=ExtResource("4_60wo6")]
+position = Vector2(26, -324)
+process_material = SubResource("ParticleProcessMaterial_gnq0s")
+
 [node name="LeftBoundary" type="StaticBody2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LeftBoundary"]
@@ -130,7 +173,7 @@ tile_map_data = PackedByteArray("AAA4ABEAAgABAAUAAAA3ABEAAgABAAUAAAA0ABQAAgABAAY
 tile_set = ExtResource("2_rjj6t")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(-1188, -447)
+position = Vector2(-1467, -421)
 zoom = Vector2(3, 3)
 limit_left = -1152
 limit_top = -725
@@ -140,7 +183,7 @@ limit_smoothed = true
 
 [node name="Player" parent="." instance=ExtResource("3_cru1r")]
 z_index = 1
-position = Vector2(435, 321)
+position = Vector2(-1184, -409)
 
 [node name="Ship" parent="Player" instance=ExtResource("4_c1dia")]
 show_behind_parent = true
