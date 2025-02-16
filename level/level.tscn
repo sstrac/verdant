@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=4 uid="uid://ecdlgh485rbl"]
+[gd_scene load_steps=34 format=4 uid="uid://ecdlgh485rbl"]
 
 [ext_resource type="Script" path="res://level/level.gd" id="1_n2urj"]
 [ext_resource type="TileSet" uid="uid://gapk0nxp88nx" path="res://assets/level_tileset.tres" id="2_rjj6t"]
@@ -18,6 +18,7 @@
 [ext_resource type="AudioStream" uid="uid://cu0fy5sn4r11g" path="res://assets/sfx/jameswrowles__hum1.wav" id="13_7o7fs"]
 [ext_resource type="Shader" uid="uid://b2y2wx1t0otcw" path="res://assets/shaders/thick_fog.tres" id="16_7ko8q"]
 [ext_resource type="PackedScene" uid="uid://bbm8kdlqvj4i0" path="res://space.tscn" id="17_36ykt"]
+[ext_resource type="AudioStream" uid="uid://cdgw80ht00pfa" path="res://assets/music/sad_intro.wav" id="19_4gexu"]
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_ec75a"]
 b = Vector2(0, 700)
@@ -372,6 +373,10 @@ offset_top = -58.0
 offset_right = 1211.0
 offset_bottom = 701.0
 color = Color(0.827451, 0.827451, 0.827451, 1)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("19_4gexu")
+autoplay = true
 
 [connection signal="area_entered" from="SceneArea1" to="." method="_on_scene_1_area_area_entered"]
 [connection signal="area_entered" from="SceneArea2" to="." method="_on_scene_area_2_area_entered"]
