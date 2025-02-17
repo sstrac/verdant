@@ -6,7 +6,7 @@ const VECTOR_16 = Vector2i(16, 16)
 const DIALOGUE_BOX = preload("res://dialogue/dialogue_box.tscn")
 const PIG_FOLLOW_FIRST_CHECKPOINT = 735
 const PIG_FOLLOW_SECOND_CHECKPOINT = 1044
-
+const OUTRO_MUSIC = preload("res://assets/music/happy_outro.wav")
 
 @onready var player = get_node("Player")
 @onready var ship = get_node("Player/Ship")
@@ -117,6 +117,8 @@ func _on_fadeout_ended():
 	fadeout_timer.stop()
 	
 	if player.outro_cutscene:
+		audio_stream_player.stream = OUTRO_MUSIC
+		audio_stream_player.play()
 		fadeout = false
 		camera.limit_top = -9999999
 		camera.global_position = player.global_position
