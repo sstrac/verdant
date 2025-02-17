@@ -83,7 +83,7 @@ const SCENE_UGLY_PLANET: Dictionary = {
 		"right:That seems to be all the pigs.",
 		"left:Is there any way we can make the planet a bit nicer for them? it's looking a little drab still.",
 		"right:Perhaps if you water the trees and fill in more watering holes it may improve the situation.",
-		"left:On it!"
+		"left:Maybe we can do something about that old infrastructure too."
 	]
 }
 
