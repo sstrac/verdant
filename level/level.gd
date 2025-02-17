@@ -32,7 +32,7 @@ const REVEAL_MUSIC = preload("res://assets/music/happy_reveal.wav")
 @onready var fogs = get_node("Fogs")
 @onready var fade_rect = get_node("FadeRect")
 @onready var fadeout_timer = get_node("FadeoutTimer")
-@onready var audio_stream_player = get_node("AudioStreamPlayer")
+@onready var audio_stream_player: AudioStreamPlayer = get_node("AudioStreamPlayer")
 
 
 var next_scene = Scenes.SCENE_1
@@ -59,6 +59,7 @@ func _ready():
 	player.procrastination.connect(_on_procrastination)
 	player.first_item_acquired.connect(_on_first_item_acquired)
 	player.game_finished.connect(_show_credits)
+	player.intro_finished.connect(_on_intro_finished)
 	
 	ship.entered_after_revival.connect(_entered_ship_after_revival)
 	
@@ -133,18 +134,21 @@ func _on_fadeout_ended():
 		ui.show()
 		
 
+func _on_intro_finished():
+	if audio_stream_player.playing:
+		await audio_stream_player.finished
+	_play_cutscene()
+	player.intro_cutscene = false
+	ui.show()
+	player.enable_collision()
+	ship.enable_collision()
+	ship.reparent(self)
+	camera.limit_left = 0
+	camera.limit_top = 20
+
+
 func _on_music_finished():
-	if audio_stream_player.stream == INTRO_MUSIC:
-		_play_cutscene()
-		player.intro_cutscene = false
-		ui.show()
-		player.enable_collision()
-		ship.enable_collision()
-		ship.reparent(self)
-		camera.limit_left = 0
-		camera.limit_top = 20
-		
-	elif audio_stream_player.stream == REVEAL_MUSIC:
+	if audio_stream_player.stream == REVEAL_MUSIC:
 		revival_cutscene = false
 		_play_cutscene(Scenes.SCENE_PIG_EVOLUTION_FOLLOWUP)
 	

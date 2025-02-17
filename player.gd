@@ -40,7 +40,7 @@ signal died
 signal procrastination
 signal first_item_acquired
 signal game_finished
-
+signal intro_finished
 
 func _ready():
 	available_abilities.append(Abilities.HAND)
@@ -60,12 +60,15 @@ func _physics_process(delta: float) -> void:
 	if intro_cutscene:
 		if global_position.x >= 400:
 			velocity = Vector2.DOWN * CUTSCENE_SPEED
+			
 		else:
 			time += delta
 			velocity = (Vector2.RIGHT * CUTSCENE_SPEED) + (Vector2.UP * cos(time) * 10)
 		
 		if global_position.y >= 320:
 			velocity = Vector2.ZERO
+			intro_finished.emit()
+			
 	elif outro_cutscene:
 		time += delta
 		velocity = (Vector2.LEFT * CUTSCENE_SPEED) + (Vector2.UP * cos(time) * 10)
