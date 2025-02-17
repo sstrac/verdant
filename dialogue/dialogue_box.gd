@@ -11,8 +11,10 @@ var finished: bool
 var scene:
 	set(s):
 		scene = s
-		manuscript = s.get('script')
-		characters = s.get('characters')
+		
+		if s:
+			manuscript = s.get('script')
+			characters = s.get('characters')
 var manuscript
 var characters
 

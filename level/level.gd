@@ -6,7 +6,10 @@ const VECTOR_16 = Vector2i(16, 16)
 const DIALOGUE_BOX = preload("res://dialogue/dialogue_box.tscn")
 const PIG_FOLLOW_FIRST_CHECKPOINT = 735
 const PIG_FOLLOW_SECOND_CHECKPOINT = 1044
+
+const INTRO_MUSIC = preload("res://assets/music/sad_intro.wav")
 const OUTRO_MUSIC = preload("res://assets/music/happy_outro.wav")
+const REVEAL_MUSIC = preload("res://assets/music/happy_reveal.wav")
 
 @onready var player = get_node("Player")
 @onready var ship = get_node("Player/Ship")
@@ -46,8 +49,7 @@ var pig_path_follow_distance = 0
 var dug = false
 
 func _ready():
-	#TBD
-	audio_stream_player.finished.connect(_on_intro_music_finished)
+	audio_stream_player.finished.connect(_on_music_finished)
 	fadeout_timer.timeout.connect(_on_fadeout_ended)
 	player.disable_collision()
 	ship.disable_collision()
@@ -76,9 +78,6 @@ func _ready():
 	for generator in generators.get_children():
 		generator.has_broken.connect(_on_generator_broken)
 		generator.revived.connect(_on_object_revival)
-		
-	#TEST
-	#_on_intro_music_finished()
 
 
 func _physics_process(delta: float) -> void:
@@ -93,11 +92,7 @@ func _physics_process(delta: float) -> void:
 		else:
 			camera.global_position = lerp(camera.global_position, player.global_position, delta * LERP_SPEED)
 	else:
-		camera.global_position = lerp(camera.global_position, camera.global_position + Vector2(1, 0), delta * LERP_SPEED * 2)
-		
-		if camera.global_position.x >= player.global_position.x:
-			revival_cutscene = false
-			_play_cutscene(Scenes.SCENE_PIG_EVOLUTION_FOLLOWUP)
+		camera.global_position = lerp(camera.global_position, camera.global_position + Vector2(1, 0), delta * LERP_SPEED * 3)
 
 
 func _process(delta):
@@ -128,6 +123,8 @@ func _on_fadeout_ended():
 		
 
 	elif World.revived:
+		audio_stream_player.stream = REVEAL_MUSIC
+		audio_stream_player.play()
 		fadeout = false
 		_revive_world_tiles()
 		revival_cutscene = true
@@ -136,15 +133,20 @@ func _on_fadeout_ended():
 		ui.show()
 		
 
-func _on_intro_music_finished():
-	_play_cutscene()
-	player.intro_cutscene = false
-	ui.show()
-	player.enable_collision()
-	ship.enable_collision()
-	ship.reparent(self)
-	camera.limit_left = 0
-	camera.limit_top = 20
+func _on_music_finished():
+	if audio_stream_player.stream == INTRO_MUSIC:
+		_play_cutscene()
+		player.intro_cutscene = false
+		ui.show()
+		player.enable_collision()
+		ship.enable_collision()
+		ship.reparent(self)
+		camera.limit_left = 0
+		camera.limit_top = 20
+		
+	elif audio_stream_player.stream == REVEAL_MUSIC:
+		revival_cutscene = false
+		_play_cutscene(Scenes.SCENE_PIG_EVOLUTION_FOLLOWUP)
 	
 
 func _on_object_revival():
