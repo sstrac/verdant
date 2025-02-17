@@ -3,19 +3,18 @@
 [ext_resource type="PackedScene" uid="uid://dleajr8g6u06r" path="res://level/fauna_flora/animal.tscn" id="1_ugk6p"]
 
 [node name="SpaceAnimals" type="Node2D"]
-position = Vector2(60, 0)
 
 [node name="Animal" parent="." instance=ExtResource("1_ugk6p")]
-position = Vector2(1246, -439)
+position = Vector2(1347, -439)
 disable_regular_physics = true
 space_animal = true
 
 [node name="Animal2" parent="." instance=ExtResource("1_ugk6p")]
-position = Vector2(1345, -404)
+position = Vector2(1446, -404)
 disable_regular_physics = true
 space_animal = true
 
 [node name="Animal3" parent="." instance=ExtResource("1_ugk6p")]
-position = Vector2(1270, -359)
+position = Vector2(1371, -359)
 disable_regular_physics = true
 space_animal = true
