@@ -13,6 +13,7 @@ func enable_collision():
 
 
 func _on_area_2d_area_entered(area: Area2D) -> void:
-	if World.revived:
-		call_deferred('reparent', area.get_parent())
+	var player = area.get_parent()
+	if World.revived and not player.outro_cutscene:
+		reparent(player)
 		entered_after_revival.emit()

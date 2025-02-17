@@ -56,6 +56,7 @@ func _ready():
 	player.died.connect(_on_death)
 	player.procrastination.connect(_on_procrastination)
 	player.first_item_acquired.connect(_on_first_item_acquired)
+	player.game_finished.connect(_show_credits)
 	
 	ship.entered_after_revival.connect(_entered_ship_after_revival)
 	
@@ -82,8 +83,13 @@ func _ready():
 
 func _physics_process(delta: float) -> void:
 	if not revival_cutscene:
-		if (player.intro_cutscene and player.global_position.x < 400) or player.outro_cutscene:
+		if (player.intro_cutscene and player.global_position.x < 400):
 			camera.global_position.x = lerp(camera.global_position.x, player.global_position.x, delta * LERP_SPEED)
+		
+		elif player.outro_cutscene:
+			if camera.global_position.x >= -960:
+				camera.global_position.x = lerp(camera.global_position.x, player.global_position.x, delta * LERP_SPEED)
+
 		else:
 			camera.global_position = lerp(camera.global_position, player.global_position, delta * LERP_SPEED)
 	else:
@@ -100,10 +106,11 @@ func _process(delta):
 	if pig_path_follow.progress < pig_path_follow_distance:
 		pig_path_follow.progress += 1.2
 	
-	if fadeout and not fade_rect.color.a >= 1:
-		fade_rect.color.a += 0.1
-	elif not fadeout and not fade_rect.color.a <= 0:
-		fade_rect.color.a -= 0.1
+
+	if fadeout and not fade_rect.color.a8 == 255:
+		fade_rect.color.a8 += 17
+	elif not fadeout and not fade_rect.color.a8 == 0:
+		fade_rect.color.a8 -= 17
 
 
 func _on_fadeout_ended():
@@ -111,7 +118,11 @@ func _on_fadeout_ended():
 	
 	if player.outro_cutscene:
 		fadeout = false
+		camera.limit_top = -9999999
+		camera.global_position = player.global_position
 		player.start_physics_input()
+		var space_pigs: PackedScene = load("res://space/space_animals.tscn")
+		add_child(space_pigs.instantiate())
 		
 
 	elif World.revived:
@@ -190,16 +201,21 @@ func _on_first_item_acquired():
 	_play_cutscene(Scenes.SCENE_NEW_ITEM)
 
 
+func _show_credits():
+	var label = get_node("Label")
+	if not label.visible:
+		label.show()
+	
+
 func _entered_ship_after_revival():
-	player.last_velocity = Vector2.LEFT
-	player.global_position = Vector2(1160, -400)
-	camera.limit_top = -9999999
-	camera.global_position = player.global_position
-	player.stop_physics_input()
-	fadeout = true
-	fadeout_timer.start()
-	player.outro_cutscene = true
-	ui.hide()
+	if not player.outro_cutscene:
+		player.last_velocity = Vector2.LEFT
+		player.global_position = Vector2(1160, -400)
+		player.stop_physics_input()
+		player.outro_cutscene = true
+		ui.hide()
+		fadeout = true
+		fadeout_timer.start(3)
 	
 	
 func _redraw_electricity():

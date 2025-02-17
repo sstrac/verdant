@@ -33,10 +33,13 @@ var pig_pet_count = 0:
 
 var procrastinated: bool = false
 var time = 0
+var game_has_finished = false
+
 signal health_changed
 signal died
 signal procrastination
 signal first_item_acquired
+signal game_finished
 
 
 func _ready():
@@ -66,6 +69,10 @@ func _physics_process(delta: float) -> void:
 	elif outro_cutscene:
 		time += delta
 		velocity = (Vector2.LEFT * CUTSCENE_SPEED) + (Vector2.UP * cos(time) * 10)
+		
+		if global_position.x < -1100 and not game_has_finished:
+			game_has_finished = true
+			game_finished.emit()
 	else:
 		var direction = Input.get_vector("left", "right", "up", "down")
 		var speed = ORTHOGONAL_SPEED

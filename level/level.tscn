@@ -123,22 +123,19 @@ metadata/_edit_horizontal_guides_ = [320.0, 320.0]
 [node name="Space" parent="." instance=ExtResource("17_36ykt")]
 position = Vector2(-1152, -725)
 
-[node name="SpacePigs" type="Node2D" parent="."]
+[node name="SpaceObjects" type="Node2D" parent="."]
 modulate = Color(1, 1, 1, 0.501961)
 position = Vector2(0, -1)
 
-[node name="Animal" parent="SpacePigs" instance=ExtResource("3_g8raj")]
-position = Vector2(1173, -593)
-
-[node name="Comet" parent="SpacePigs" instance=ExtResource("4_60wo6")]
+[node name="Comet" parent="SpaceObjects" instance=ExtResource("4_60wo6")]
 position = Vector2(-308, -566)
 
-[node name="Comet2" parent="SpacePigs" instance=ExtResource("4_60wo6")]
-position = Vector2(-282, -554)
+[node name="Comet2" parent="SpaceObjects" instance=ExtResource("4_60wo6")]
+position = Vector2(-251, -510)
 process_material = SubResource("ParticleProcessMaterial_xpmh3")
 
-[node name="Comet3" parent="SpacePigs" instance=ExtResource("4_60wo6")]
-position = Vector2(26, -324)
+[node name="Comet3" parent="SpaceObjects" instance=ExtResource("4_60wo6")]
+position = Vector2(157, -267)
 process_material = SubResource("ParticleProcessMaterial_gnq0s")
 
 [node name="LeftBoundary" type="StaticBody2D" parent="."]
@@ -173,7 +170,7 @@ tile_map_data = PackedByteArray("AAA4ABEAAgABAAUAAAA3ABEAAgABAAUAAAA0ABQAAgABAAY
 tile_set = ExtResource("2_rjj6t")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(-1467, -421)
+position = Vector2(-960, -411)
 zoom = Vector2(3, 3)
 limit_left = -1152
 limit_top = -725
@@ -365,19 +362,19 @@ debug_color = Color(0.682353, 0.298039, 1, 0.129412)
 [node name="PlanetaryFog" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
-offset_left = 935.0
-offset_top = -16.0
-offset_right = 975.0
-offset_bottom = 24.0
+offset_left = 937.0
+offset_top = 1.0
+offset_right = 977.0
+offset_bottom = 41.0
 
 [node name="Fog3" type="ColorRect" parent="PlanetaryFog"]
 z_index = 999
 material = SubResource("ShaderMaterial_3ovvw")
 layout_mode = 0
-offset_left = -930.0
-offset_top = -205.0
-offset_right = 232.0
-offset_bottom = 35.0
+offset_left = -857.0
+offset_top = -208.0
+offset_right = 305.0
+offset_bottom = 32.0
 color = Color(0.82606, 0.82606, 0.82606, 1)
 
 [node name="Fog" type="ColorRect" parent="PlanetaryFog"]
@@ -416,10 +413,24 @@ color = Color(0.827451, 0.827451, 0.827451, 1)
 
 [node name="FadeRect" type="ColorRect" parent="."]
 z_index = 1000
-offset_left = -51.0
-offset_right = 1501.0
-offset_bottom = 648.0
+offset_left = -27.0
+offset_top = -763.0
+offset_right = 1222.0
+offset_bottom = 720.0
 color = Color(0, 0, 0, 0)
+
+[node name="Label" type="Label" parent="."]
+visible = false
+top_level = true
+offset_left = -992.0
+offset_top = -488.0
+offset_right = -921.0
+offset_bottom = -387.0
+text = "Made by
+
+BelleQuo
+HD411"
+horizontal_alignment = 1
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("19_4gexu")

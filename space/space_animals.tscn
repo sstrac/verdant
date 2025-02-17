@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://cyt6c416ra7vo"]
+
+[ext_resource type="PackedScene" uid="uid://dleajr8g6u06r" path="res://level/fauna_flora/animal.tscn" id="1_ugk6p"]
+
+[node name="SpaceAnimals" type="Node2D"]
+
+[node name="Animal" parent="." instance=ExtResource("1_ugk6p")]
+position = Vector2(1252, -449)
+disable_regular_physics = true
+space_animal = true
+
+[node name="Animal2" parent="." instance=ExtResource("1_ugk6p")]
+position = Vector2(1345, -404)
+disable_regular_physics = true
+space_animal = true
+
+[node name="Animal3" parent="." instance=ExtResource("1_ugk6p")]
+position = Vector2(1270, -358)
+disable_regular_physics = true
+space_animal = true
