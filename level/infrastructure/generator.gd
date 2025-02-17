@@ -37,6 +37,7 @@ func interact(player):
 		
 	elif broken and player.current_ability == Abilities.WATERING:
 		player.audio_stream_player.stream = Sounds.WATER_SOUND
+		player.audio_stream_player.play()
 		is_revived = true
 		revived.emit()
 		sprite.texture = REVIVED_TEXTURE

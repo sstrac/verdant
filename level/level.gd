@@ -236,7 +236,6 @@ func _revive_world_tiles():
 
 func _check_all_powerlines_broken():
 	if powerlines.get_children().all(func(p): return p.broken):
-		powerlines_quest_complete = true
 		electrical_hum_audio.stop()
 		if trapped_pig_watering_hole_quest_complete:
 			pig_path_follow_distance = PIG_FOLLOW_SECOND_CHECKPOINT

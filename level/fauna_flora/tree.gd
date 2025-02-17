@@ -24,6 +24,7 @@ func _ready():
 func interact(player):
 	if waterable:
 		player.audio_stream_player.stream = Sounds.WATER_SOUND
+		player.audio_stream_player.play()
 		rect.texture = TREE_0
 		timer.start()
 		waterable = false
