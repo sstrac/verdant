@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://dnqqiry5lw15g"]
 
-[ext_resource type="Script" path="res://ship.gd" id="1_4m2ny"]
+[ext_resource type="Script" path="res://space/ship.gd" id="1_4m2ny"]
 [ext_resource type="Texture2D" uid="uid://ci7hmwxcyl58w" path="res://assets/textures/ship_texture/flying_ship_open_layer2.png" id="1_6ljol"]
 [ext_resource type="Texture2D" uid="uid://ckfblp7vacbwf" path="res://assets/textures/ship_texture/flying_ship_layer1.png" id="2_t0vmx"]
 

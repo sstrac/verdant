@@ -1,4 +1,4 @@
-extends Node2D
+extends CollisionObject2D
 
 class_name Interactable
 
