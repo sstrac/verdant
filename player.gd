@@ -70,7 +70,7 @@ func _physics_process(delta: float) -> void:
 		time += delta
 		velocity = (Vector2.LEFT * CUTSCENE_SPEED) + (Vector2.UP * cos(time) * 10)
 		
-		if global_position.x < -1100 and not game_has_finished:
+		if global_position.x < -40 and not game_has_finished:
 			game_has_finished = true
 			game_finished.emit()
 	else:

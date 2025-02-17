@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=4 uid="uid://ecdlgh485rbl"]
+[gd_scene load_steps=38 format=4 uid="uid://ecdlgh485rbl"]
 
 [ext_resource type="Script" path="res://level/level.gd" id="1_n2urj"]
 [ext_resource type="TileSet" uid="uid://gapk0nxp88nx" path="res://assets/level_tileset.tres" id="2_rjj6t"]
@@ -20,6 +20,7 @@
 [ext_resource type="Shader" uid="uid://b2y2wx1t0otcw" path="res://assets/shaders/thick_fog.tres" id="16_7ko8q"]
 [ext_resource type="PackedScene" uid="uid://bbm8kdlqvj4i0" path="res://space/space.tscn" id="17_36ykt"]
 [ext_resource type="AudioStream" uid="uid://cdgw80ht00pfa" path="res://assets/music/sad_intro.wav" id="19_4gexu"]
+[ext_resource type="FontFile" uid="uid://dihvo2v27tls1" path="res://assets/Chewy-Regular.ttf" id="20_3l5lx"]
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_xpmh3"]
 particle_flag_disable_z = true
@@ -422,10 +423,12 @@ color = Color(0, 0, 0, 0)
 [node name="Label" type="Label" parent="."]
 visible = false
 top_level = true
-offset_left = -992.0
-offset_top = -488.0
-offset_right = -921.0
-offset_bottom = -387.0
+offset_left = 155.0
+offset_top = -468.0
+offset_right = 226.0
+offset_bottom = -367.0
+theme_override_colors/font_color = Color(0.98815, 0.985681, 0.890482, 1)
+theme_override_fonts/font = ExtResource("20_3l5lx")
 text = "Made by
 
 BelleQuo
