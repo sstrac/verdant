@@ -10,6 +10,8 @@ const PIG_FOLLOW_SECOND_CHECKPOINT = 1044
 const INTRO_MUSIC = preload("res://assets/music/sad_intro.wav")
 const OUTRO_MUSIC = preload("res://assets/music/happy_outro.wav")
 const REVEAL_MUSIC = preload("res://assets/music/happy_reveal.wav")
+const BG_MUSIC = preload("res://assets/music/verdant_piano_bg.wav")
+
 
 @onready var player = get_node("Player")
 @onready var ship = get_node("Player/Ship")
@@ -151,6 +153,8 @@ func _on_music_finished():
 	if audio_stream_player.stream == REVEAL_MUSIC:
 		revival_cutscene = false
 		_play_cutscene(Scenes.SCENE_PIG_EVOLUTION_FOLLOWUP)
+		audio_stream_player.stream = BG_MUSIC
+		audio_stream_player.play()
 	
 
 func _on_object_revival():
